@@ -4,7 +4,6 @@
 #include "HF.h"
 #include "NetworkCommunication.h"
 #include <Adafruit_NeoPixel.h>
-//#include <Scheduler.h>
 
 HF prvni = HF(1000, 6, NEO_GRB + NEO_KHZ800);
 HF druhy = HF(1000, 2, NEO_GRB + NEO_KHZ800);
