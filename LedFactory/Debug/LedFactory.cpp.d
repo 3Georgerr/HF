@@ -138,6 +138,7 @@ C:\Users\admin\AppData\Local\Temp\VMBuilds\LedFactory\arduino_due_x_dbg\Debug\Le
  C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/Stream.h \
  C:\Users\admin\AppData\Local\Temp\VMBuilds\LedFactory\arduino_due_x_dbg\Debug\HF.h \
  C:\Users\admin\Desktop\arduino-1.8.1\libraries\Adafruit_NeoPixel/Adafruit_NeoPixel.h \
+ C:\Users\admin\AppData\Local\Temp\VMBuilds\LedFactory\arduino_due_x_dbg\Debug\NetworkCommunication.h \
  C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\libraries\SPI\src/SPI.h \
  C:\Users\admin\Documents\Arduino\libraries\UIPEthernet\src/UIPEthernet.h \
  C:\Users\admin\Documents\Arduino\libraries\UIPEthernet\src/ethernet_comp.h \
@@ -162,5 +163,4 @@ C:\Users\admin\AppData\Local\Temp\VMBuilds\LedFactory\arduino_due_x_dbg\Debug\Le
  C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/Server.h \
  C:\Users\admin\Documents\Arduino\libraries\UIPEthernet\src/utility/uip_timer.h \
  C:\Users\admin\Documents\Arduino\libraries\UIPEthernet\src/utility/uip_clock.h \
- C:\Users\admin\Documents\Arduino\libraries\UIPEthernet\src/utility/clock-arch.h \
- C:\Program\ Files\ (x86)\Microsoft\ Visual\ Studio\ 14.0\Common7\IDE\Extensions\c41gn4tu.kh2\Micro\ Platforms\default\debuggers\VM_DBG/VM_DBG.h
+ C:\Users\admin\Documents\Arduino\libraries\UIPEthernet\src/utility/clock-arch.h

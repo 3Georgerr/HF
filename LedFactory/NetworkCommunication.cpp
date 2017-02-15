@@ -117,16 +117,26 @@ void NetworkCommunication::loop()
 	
 }
 
-NetworkCommunication::NetworkCommunication(IPAddress myIP, uint8_t mac[6])
+void NetworkCommunication::start()
+{
+	//uint8_t macv[6] = { 0x00,0x01,0x02,0x03,0x04,0x05 };
+
+	//Ethernet.begin(macv, IPAddress(10, 0, 0, 34), IPAddress(8, 8, 8, 8), IPAddress(10, 0, 0, 138));
+	Ethernet.begin(this->mac, this->myIP);
+	server.begin();
+}
+
+NetworkCommunication::NetworkCommunication(uint8_t mac[6], IPAddress myIP)
 {
 	this->myIP = myIP;
 	for (int i = 0; i < 6; i++) {
 		this->mac[i] = mac[i];
 	}
-	Serial.println("Test");
-	//Ethernet.begin(mac, IPAddress(10, 0, 0, 34), IPAddress(8,8,8,8),IPAddress(10,0,0,138));
-	Ethernet.begin(this->mac, this->myIP);
+	uint8_t macv[6] = { 0x00,0x01,0x02,0x03,0x04,0x05 };
+	//Ethernet.begin(macv, IPAddress(10, 0, 0, 34), IPAddress(8, 8, 8, 8), IPAddress(10, 0, 0, 138));
+	//Ethernet.begin(this->mac, this->myIP);
 	//server.begin();
+	
 }
 
 /**
