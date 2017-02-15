@@ -33,8 +33,8 @@ void setup() {
 	nc.start();
 }
 
-
-void loop2() {
+void loop() {
+	
 	if (millis() % 100 == 1) {
 		druhy.loop();
 		prvni.loop();
@@ -56,11 +56,6 @@ void loop2() {
 	}
 	interrupts();
 
-	
-}
-
-void loop() {
-	
 	if (millis()>20000) {
 		prvni.setMode(3);
 		//delay(1);
