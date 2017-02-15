@@ -67,6 +67,14 @@ public:
 	uint32_t color(uint8_t red, uint8_t green, uint8_t blue) {
 		return (red << 16) | (green << 8) | blue;
 	}
+
+	uint32_t blinkColor(uint8_t redFirst, uint8_t greenFirst, uint8_t blueFirst) {
+		blinkColorOne = color(redFirst, greenFirst, blueFirst);
+	}
+	uint32_t blinkColor(uint8_t redFirst, uint8_t greenFirst, uint8_t blueFirst, uint8_t redSecond, uint8_t greenSecond, uint8_t blueSecond) {
+		blinkColorOne = color(redFirst, greenFirst, blueFirst);
+		blinkColorTwo = color(redSecond, greenSecond, blueSecond);
+	}
 	
 	void blikej();
 	void startuj();

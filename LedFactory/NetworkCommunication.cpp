@@ -120,12 +120,12 @@ void NetworkCommunication::loop()
 NetworkCommunication::NetworkCommunication(IPAddress myIP, uint8_t mac[6])
 {
 	this->myIP = myIP;
-	for(int i=0;i<6;i++){
+	for (int i = 0; i < 6; i++) {
 		this->mac[i] = mac[i];
 	}
-	
-	Ethernet.begin(this->mac, this->myIP);
-	server.begin();
+	Ethernet.begin(mac, IPAddress(10, 0, 0, 34), IPAddress(8,8,8,8),IPAddress(10,0,0,138));
+	//Ethernet.begin(this->mac, this->myIP);
+	//server.begin();
 }
 
 /**
