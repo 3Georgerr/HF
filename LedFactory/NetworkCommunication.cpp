@@ -123,8 +123,9 @@ NetworkCommunication::NetworkCommunication(IPAddress myIP, uint8_t mac[6])
 	for (int i = 0; i < 6; i++) {
 		this->mac[i] = mac[i];
 	}
-	Ethernet.begin(mac, IPAddress(10, 0, 0, 34), IPAddress(8,8,8,8),IPAddress(10,0,0,138));
-	//Ethernet.begin(this->mac, this->myIP);
+	Serial.println("Test");
+	//Ethernet.begin(mac, IPAddress(10, 0, 0, 34), IPAddress(8,8,8,8),IPAddress(10,0,0,138));
+	Ethernet.begin(this->mac, this->myIP);
 	//server.begin();
 }
 
