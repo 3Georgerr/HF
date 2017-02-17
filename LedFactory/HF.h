@@ -53,7 +53,8 @@ private:
 	uint32_t startColorThree = 255128128;
 	uint8_t startPhase = 0;
 
-	uint32_t confColor=255128128;
+	uint32_t confColor = 32;
+	
 
 public:
 	HF(uint16_t n, uint8_t p = 6, uint8_t t = NEO_GRB + NEO_KHZ800)
@@ -62,6 +63,7 @@ public:
 		lastBlink = millis();
 		strip.begin();
 		numPix = strip.numPixels();
+		//confColor = color(255,0,0);
 	}
 
 	uint32_t color(uint8_t red, uint8_t green, uint8_t blue) {

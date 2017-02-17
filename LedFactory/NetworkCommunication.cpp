@@ -35,8 +35,7 @@ int NetworkCommunication::parseUrlParams(char *queryString, char *results[][2], 
 
 void NetworkCommunication::loop()
 {
-		char clientline[BUFSIZ];
-		int index = 0;
+		 index = 0;
 		EthernetClient client = server.available();
 
 		if (client) {
@@ -60,7 +59,7 @@ void NetworkCommunication::loop()
 					// got a \n or \r new line, which means the string is done
 					clientline[index] = 0;
 					// Print it out for debugging
-					Serial.println(clientline);
+					//	Serial.println(clientline);
 					// Look for substring such as a request to get the root file
 					if (strstr(clientline, "GET / ") != 0) {
 						// send a standard http response header
@@ -69,6 +68,9 @@ void NetworkCommunication::loop()
 						client.println();
 						// print all the files, use a helper to keep it clean
 						client.println("<h2>Files:</h2>");
+						client.println(clientline);
+
+						
 
 					}
 					else if (strstr(clientline, "GET /") != 0) {
@@ -79,7 +81,7 @@ void NetworkCommunication::loop()
 												   // turn the first character of the substring into a 0 to clear it out.
 						(strstr(clientline, " HTTP"))[0] = 0;
 						// print the file we want
-						Serial.println(filename);
+					//	Serial.println(filename);
 						/*   if (! file.open(&root, filename, O_READ)) {
 						client.println("HTTP/1.1 404 Not Found");
 						client.println("Content-Type: text/html");
@@ -88,7 +90,7 @@ void NetworkCommunication::loop()
 						break;
 						}
 						*/
-						Serial.println("Opened!");
+						//	Serial.println("Opened!");
 						client.println("HTTP/1.1 200 OK");
 						client.println("Content-Type: text/plain");
 						client.println();
@@ -97,6 +99,35 @@ void NetworkCommunication::loop()
 						// uncomment the serial to debug (slow!)
 						//Serial.print((char)c);
 						client.println(clientline);
+
+						//char buf[BUFSIZ];
+						char *params[5][2];
+						// copy test[i] into the buffer
+						// because the parser overwrites what is i the string it is passed. And copy shifted to 5 letter - "GET /"
+						//strcpy nefunguje ok s posunem
+						//strcpy(buf, clientline);
+						//memmove ok, ale zbytecne pouzivat dalsi buffer
+						//memmove(buf, &clientline[5],BUFSIZ-5);
+						// parse the buffer into params[][]
+						//pokud bychom pouzili buffer
+						//int resultsCt = parseUrlParams(bud, params, 5, true);
+						int resultsCt = parseUrlParams(&clientline[5], params, 5, true);
+
+						client.println("\" produced ");
+						client.println(resultsCt);
+						client.println(" parameters:");
+						client.println();
+
+						for (int i = 0; i < resultsCt; i++) {
+							client.println("param ");
+							client.println(i);
+							client.println(" name \"");
+							client.println(params[i][0]);
+							client.println("\", param \"");
+							client.println(params[i][1]);
+							client.println("\".");
+							client.println();
+						}
 						// }
 						//          file.close();
 					}

@@ -113,6 +113,7 @@ void HF::light()
 		for (uint16_t i = 0; i < numPix; i++) {
 			strip.setPixelColor(i, confColor);
 		}
+		delay(100);
 		//strip.show();
 	}
 }
