@@ -33,47 +33,75 @@ private:
 	//mode 1 = blinking
 	//mode 2 = starting
 	//mode 3 = light
-	uint8_t mode = 1;
+	uint8_t mode;
 	static const uint32_t REFRESH_RATE = 1000;
-	boolean changedMode = false;
+	boolean changedMode;
 
 	unsigned long lastBlink;
-	boolean change = true;
-	uint32_t blinkDelay = 500;
-	uint32_t blinkColorOne = 255000000;
-	uint32_t blinkColorTwo = 000000000;
+	boolean change;
+	uint32_t blinkDelay;
+	uint32_t blinkColorOne;
+	uint32_t blinkColorTwo;
 
-	boolean svit = true;
-	uint32_t startDelay = 1000;
+	boolean svit;
+	uint32_t startDelay;
 
 	//Startuj
 	unsigned long startTime;
-	uint32_t startColorOne = 255128128;
-	uint32_t startColorTwo = 255128128;
-	uint32_t startColorThree = 255128128;
-	uint8_t startPhase = 0;
+	uint32_t startColorOne;
+	uint32_t startColorTwo;
+	uint32_t startColorThree;
+	uint8_t startPhase;
 
-	uint32_t confColor = 32;
+	uint32_t confColor;
 	
 
 public:
 	HF(uint16_t n, uint8_t p = 6, uint8_t t = NEO_GRB + NEO_KHZ800)
 	{
 		strip = Adafruit_NeoPixel(n, p, t);
+		numPix = n;
+
 		lastBlink = millis();
+		
+		mode = 1;
+		changedMode = false;
+
+		lastBlink;
+		change = true;
+		blinkDelay = 500;
+		blinkColorOne;
+		blinkColorTwo;
+
+		svit = true;
+		startDelay = 1000;
+
+		//Startuj
+		startTime;
+		startColorOne = 255128128;
+		startColorTwo = 255128128;
+		startColorThree = 255128128;
+		startPhase = 0;
+
+		confColor = 255000000;
+
+		blinkColorOne = 255000000;
+		blinkColorTwo = 000000000;
+		blinkDelay = 500;
+
 		strip.begin();
-		numPix = strip.numPixels();
-		//confColor = color(255,0,0);
+	//	confColor = color(255,0,0);
 	}
 
 	uint32_t color(uint8_t red, uint8_t green, uint8_t blue) {
 		return (red << 16) | (green << 8) | blue;
 	}
 
-	uint32_t blinkColor(uint8_t redFirst, uint8_t greenFirst, uint8_t blueFirst) {
+	void blinkColor(uint8_t redFirst, uint8_t greenFirst, uint8_t blueFirst) {
 		blinkColorOne = color(redFirst, greenFirst, blueFirst);
 	}
-	uint32_t blinkColor(uint8_t redFirst, uint8_t greenFirst, uint8_t blueFirst, uint8_t redSecond, uint8_t greenSecond, uint8_t blueSecond) {
+
+	void blinkColor(uint8_t redFirst, uint8_t greenFirst, uint8_t blueFirst, uint8_t redSecond, uint8_t greenSecond, uint8_t blueSecond) {
 		blinkColorOne = color(redFirst, greenFirst, blueFirst);
 		blinkColorTwo = color(redSecond, greenSecond, blueSecond);
 	}

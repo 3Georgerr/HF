@@ -5,12 +5,12 @@
 #include "NetworkCommunication.h"
 #include <Adafruit_NeoPixel.h>
 
-HF prvni = HF(1000, 6, NEO_GRB + NEO_KHZ800);
-HF druhy = HF(1060, 2, NEO_GRB + NEO_KHZ800);
-HF treti = HF(1060, 1, NEO_GRB + NEO_KHZ800);
-HF ctvrty = HF(1060, 3, NEO_GRB + NEO_KHZ800);
-HF paty = HF(1060, 4, NEO_GRB + NEO_KHZ800);
-HF sesty = HF(1060, 5, NEO_GRB + NEO_KHZ800);
+HF prvni = HF(60, 6, NEO_GRB + NEO_KHZ800);
+HF druhy = HF(90, 2, NEO_GRB + NEO_KHZ800);
+HF treti = HF(240, 1, NEO_GRB + NEO_KHZ800);
+HF ctvrty = HF(240, 3, NEO_GRB + NEO_KHZ800);
+HF paty = HF(240, 4, NEO_GRB + NEO_KHZ800);
+HF sesty = HF(240, 5, NEO_GRB + NEO_KHZ800);
 uint32_t counter = 0;
 
 uint8_t mac[6] = { 0x00,0x01,0x02,0x03,0x04,0x05 };
@@ -20,15 +20,17 @@ NetworkCommunication nc = NetworkCommunication(mac,ip);
 
 void setup() {
 	// put your setup code here, to run once:
-	prvni = HF(300, 6, NEO_GRB + NEO_KHZ800);
-	druhy = HF(60 , 2, NEO_GRB + NEO_KHZ800);
+	prvni = HF(60, 6, NEO_GRB + NEO_KHZ800);
+	druhy = HF(90 , 2, NEO_GRB + NEO_KHZ800);
 	treti = HF(240, 1, NEO_GRB + NEO_KHZ800);
 	ctvrty = HF(240, 3, NEO_GRB + NEO_KHZ800);
 	paty = HF(240, 4, NEO_GRB + NEO_KHZ800);
 	sesty = HF(240, 5, NEO_GRB + NEO_KHZ800);
 
-	druhy.blinkColor(64, 0, 0, 0, 0, 64);
-	prvni.blinkColor(0, 0, 255, 0, 255, 0);
+	prvni.blinkColor(0, 255, 0, 0, 0, 0);
+	//prvni.blinkColor(0, 0, 255);
+	druhy.blinkColor(1, 0, 0, 0, 0, 64);
+	//prvni.blinkColor(0, 0, 255, 0, 255, 0);
 
 	nc.start();
 }

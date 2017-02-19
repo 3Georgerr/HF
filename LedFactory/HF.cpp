@@ -16,14 +16,16 @@ void HF::blikej() {
 	if (change == true) {
 		change = false;
 		if (svit == true) {
-			for (uint16_t i = 0; i<strip.numPixels(); i++) {
-				strip.setPixelColor(i, blinkColorOne);
-			}
+			//for (uint16_t i = 0; i<strip.numPixels(); i++) {
+			//	strip.setPixelColor(i, blinkColorOne);
+			//}
+			strip.setStripColor(blinkColorOne);
 		}
 		else {
-			for (uint16_t i = 0; i<strip.numPixels(); i++) {
-				strip.setPixelColor(i, blinkColorTwo);
-			}
+			//for (uint16_t i = 0; i<strip.numPixels(); i++) {
+			//	strip.setPixelColor(i, blinkColorTwo);
+			//}
+			strip.setStripColor(blinkColorTwo);
 		}
 		//strip.show();
 		svit = !svit;
@@ -75,9 +77,10 @@ void HF::startuj() {
 void HF::vypnout()
 {
 	if (changedMode || (millis() % REFRESH_RATE) ) {
-		for (uint16_t i = 0; i < numPix; i++) {
-			strip.setPixelColor(i, strip.Color(0, 0, 0));
-		}
+		//for (uint16_t i = 0; i < numPix; i++) {
+		//	strip.setPixelColor(i, strip.Color(0, 0, 0));
+		//}
+		strip.setStripColor(strip.Color(0, 0, 0));
 		//strip.show();
 	}
 }
@@ -109,11 +112,12 @@ void HF::loop() {
 void HF::light()
 {
 	//Obnovuje nastavení svìtel, pokud se zmìní stav nebo uteklo 1000 sekund 
-	if (changedMode || (millis() % REFRESH_RATE) ) {
-		for (uint16_t i = 0; i < numPix; i++) {
-			strip.setPixelColor(i, confColor);
-		}
-		delay(100);
+	if (changedMode || (millis() % REFRESH_RATE)) {
+		//for (uint16_t i = 0; i < numPix; i++) {
+			//strip.setPixelColor(i, confColor);
+		//}
+		strip.setStripColor(confColor);
+		//delay(100);
 		//strip.show();
 	}
 }
