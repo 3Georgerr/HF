@@ -49,7 +49,6 @@ void HF::startuj() {
 			for (uint16_t i = numPix*0.33; i < numPix; i++) {
 				strip.setPixelColor(i, strip.Color(0, 0, 0));
 			}
-			//strip.show();
 			break;
 		case 1:
 			for (uint16_t i = 0; i < numPix*0.66; i++) {
@@ -58,12 +57,12 @@ void HF::startuj() {
 			for (uint16_t i = numPix*0.66; i < numPix; i++) {
 				strip.setPixelColor(i, strip.Color(0, 0, 0));
 			}
-			//strip.show();
+			break;
 		case 2:
-			for (uint16_t i = 0; i < numPix; i++) {
-				strip.setPixelColor(i, startColorThree);
-			}
-			//strip.show();
+			//for (uint16_t i = 0; i < numPix; i++) {
+			//	strip.setPixelColor(i, startColorThree);
+			//}
+			strip.setStripColor(startColorThree);
 			break;
 		default:
 		//Po odstartování vypne pásek;
@@ -117,8 +116,6 @@ void HF::light()
 			//strip.setPixelColor(i, confColor);
 		//}
 		strip.setStripColor(confColor);
-		//delay(100);
-		//strip.show();
 	}
 }
 

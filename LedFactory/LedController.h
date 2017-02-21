@@ -10,6 +10,7 @@
 #endif
 
 #include "HF.h"
+#include "NetworkCommunication.h"
 
 #endif
 
@@ -17,11 +18,14 @@
 class LedController {
 private:
 	//pro nastaveni pasku
-	HF **ledPasek;
+	HF **ledStrips;
+	NetworkCommunication *nc;
 public:
 	LedController(uint8_t numOfStrips);
 	void setStrip(HF *strip, uint8_t numOfStrip);
+	void setNetworkcommunication(NetworkCommunication *nc);
 	HF* getStrip(uint8_t numOfStrip);
+	NetworkCommunication* getNetworkCommunication();
 
 
 };

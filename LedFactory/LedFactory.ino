@@ -33,9 +33,8 @@ void setup() {
 	//ip = IPAddress(10, 0, 0, 34);
 	//nc = NetworkCommunication(mac, ip, 6);
 	*/
-
+	lc.setNetworkcommunication(&nc);
 	lc.setStrip(&prvni, 0);
-	
 	lc.setStrip(&druhy, 1);
 	lc.setStrip(&treti, 2);
 	lc.setStrip(&ctvrty, 3);
@@ -79,12 +78,12 @@ void loop() {
 	interrupts();
 
 	if (millis()>5000 && counter ==0) {
-		prvni.setMode(3);
+		prvni.setMode(2);
 		//lc.getStrip(0)->setMode(3); //nefunguje
-		prvni.setColor(255,255,0); //nefunguje
+		prvni.setColor(20,20,0); //nefunguje
 	//	lc.getStrip(0)->setColor(255, 255, 0);
-		druhy.setMode(3);
-		lc.getStrip(1)->setColor(0, 255, 0);
+		druhy.setMode(2);
+		lc.getStrip(1)->setColor(20, 0, 20);
 		counter++;
 		//delay(1);
 		//druhy.setMode(3);

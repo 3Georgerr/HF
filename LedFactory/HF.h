@@ -81,6 +81,10 @@ public:
 		startColorOne = 16744576;
 		startColorTwo = 16744576;
 		startColorThree = 16744576;
+		
+		startColorOne = 16711680;
+		startColorTwo = 16711680;
+		startColorThree = 16711680;
 		startPhase = 0;
 
 	//	confColor = color(255,000,000);
