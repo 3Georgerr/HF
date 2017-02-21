@@ -69,8 +69,8 @@ public:
 		changedMode = false;
 
 		change = true;
-		blinkColorOne = 255000000;
-		blinkColorTwo = 000000000;
+		blinkColorOne = 16711680;
+		blinkColorTwo = 0;
 		blinkDelay = 500;
 	
 		svit = true;
@@ -78,13 +78,13 @@ public:
 
 		//Startuj
 		startTime;
-		startColorOne = 255128128;
-		startColorTwo = 255128128;
-		startColorThree = 255128128;
+		startColorOne = 16744576;
+		startColorTwo = 16744576;
+		startColorThree = 16744576;
 		startPhase = 0;
 
-		confColor = color(255,000,000);
-		//confColor = 255000000; //nefunguje?
+	//	confColor = color(255,000,000);
+		confColor = 16711680; //nefunguje?
 
 		strip.begin();
 	//	confColor = color(255,0,0);

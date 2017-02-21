@@ -81,10 +81,10 @@ void loop() {
 	if (millis()>5000 && counter ==0) {
 		prvni.setMode(3);
 		//lc.getStrip(0)->setMode(3); //nefunguje
-		//prvni.setColor(255,0,0); //nefunguje
-		lc.getStrip(0)->setColor(255, 0, 0);
+		prvni.setColor(255,255,0); //nefunguje
+	//	lc.getStrip(0)->setColor(255, 255, 0);
 		druhy.setMode(3);
-		//lc.getStrip(1)->setColor(0, 255, 0);
+		lc.getStrip(1)->setColor(0, 255, 0);
 		counter++;
 		//delay(1);
 		//druhy.setMode(3);
