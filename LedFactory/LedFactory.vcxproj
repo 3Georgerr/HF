@@ -80,11 +80,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="LedController.h" />
     <ClInclude Include="HF.h" />
     <ClInclude Include="NetworkCommunication.h" />
     <ClInclude Include="__vm\.LedFactory.vsarduino.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="LedController.cpp" />
     <ClCompile Include="HF.cpp" />
     <ClCompile Include="NetworkCommunication.cpp" />
   </ItemGroup>

@@ -5,6 +5,7 @@
 
 #include <SPI.h>
 #include <UIPEthernet.h>
+#include "HF.h"
 
 #if defined(ARDUINO) && ARDUINO >= 100
 	#include "arduino.h"
@@ -21,6 +22,9 @@ private:
 	uint8_t mac[6];
 	char clientline[BUFSIZ];
 	int index = 0;
+
+
+
 public:
 	//mac { 0x00,0x01,0x02,0x03,0x04,0x05 }
 	NetworkCommunication(uint8_t mac[6], IPAddress myIP);
@@ -28,5 +32,9 @@ public:
 	int parseUrlParams(char *queryString, char *results[][2], int resultsMaxCt, boolean decodeUrl);
 	void loop();
 	void start();
+	void setStrip(HF *strip, uint8_t numOfStrip);
+	HF* getStrip(uint8_t numOfStrip);
+
+	//void setStrip
 
 };

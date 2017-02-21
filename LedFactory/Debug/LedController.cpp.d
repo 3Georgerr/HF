@@ -1,5 +1,6 @@
-C:\Users\admin\AppData\Local\Temp\VMBuilds\LedFactory\arduino_due_x_dbg\Debug\LedFactory.cpp.o: \
- C:\Users\admin\AppData\Local\Temp\VMBuilds\LedFactory\arduino_due_x_dbg\Debug\LedFactory.cpp \
+C:\Users\admin\AppData\Local\Temp\VMBuilds\LedFactory\arduino_due_x_dbg\Debug\LedController.cpp.o: \
+ C:\Users\admin\AppData\Local\Temp\VMBuilds\LedFactory\arduino_due_x_dbg\Debug\LedController.cpp \
+ C:\Users\admin\AppData\Local\Temp\VMBuilds\LedFactory\arduino_due_x_dbg\Debug\LedController.h \
  C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/arduino.h \
  C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/avr/pgmspace.h \
  C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/avr/interrupt.h \
@@ -137,31 +138,4 @@ C:\Users\admin\AppData\Local\Temp\VMBuilds\LedFactory\arduino_due_x_dbg\Debug\Le
  C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/RingBuffer.h \
  C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/Stream.h \
  C:\Users\admin\AppData\Local\Temp\VMBuilds\LedFactory\arduino_due_x_dbg\Debug\HF.h \
- C:\Users\admin\Desktop\arduino-1.8.1\libraries\Adafruit_NeoPixel/Adafruit_NeoPixel.h \
- C:\Users\admin\AppData\Local\Temp\VMBuilds\LedFactory\arduino_due_x_dbg\Debug\NetworkCommunication.h \
- C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\libraries\SPI\src/SPI.h \
- C:\Users\admin\Documents\Arduino\libraries\UIPEthernet\src/UIPEthernet.h \
- C:\Users\admin\Documents\Arduino\libraries\UIPEthernet\src/ethernet_comp.h \
- C:\Users\admin\Documents\Arduino\libraries\UIPEthernet\src/Dhcp.h \
- C:\Users\admin\Documents\Arduino\libraries\UIPEthernet\src/UIPUdp.h \
- C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/Udp.h \
- C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/IPAddress.h \
- C:\Users\admin\Documents\Arduino\libraries\UIPEthernet\src/utility/mempool.h \
- C:\Users\admin\Documents\Arduino\libraries\UIPEthernet\src/utility/mempool_conf.h \
- C:\Users\admin\Documents\Arduino\libraries\UIPEthernet\src/utility/uipethernet-conf.h \
- C:\Users\admin\Documents\Arduino\libraries\UIPEthernet\src/utility/uipopt.h \
- C:\Users\admin\Documents\Arduino\libraries\UIPEthernet\src/utility/uip-conf.h \
- C:\Users\admin\Documents\Arduino\libraries\UIPEthernet\src/utility/enc28j60.h \
- C:\Users\admin\Documents\Arduino\libraries\UIPEthernet\src/utility/uip.h \
- C:\Users\admin\Documents\Arduino\libraries\UIPEthernet\src/utility/Enc28J60Network.h \
- C:\Users\admin\Documents\Arduino\libraries\UIPEthernet\src/utility/mempool.h \
- C:\Users\admin\Documents\Arduino\libraries\UIPEthernet\src/UIPClient.h \
- C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/Print.h \
- C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/Client.h \
- C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/IPAddress.h \
- C:\Users\admin\Documents\Arduino\libraries\UIPEthernet\src/UIPServer.h \
- C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/Server.h \
- C:\Users\admin\Documents\Arduino\libraries\UIPEthernet\src/utility/uip_timer.h \
- C:\Users\admin\Documents\Arduino\libraries\UIPEthernet\src/utility/uip_clock.h \
- C:\Users\admin\Documents\Arduino\libraries\UIPEthernet\src/utility/clock-arch.h \
- C:\Users\admin\AppData\Local\Temp\VMBuilds\LedFactory\arduino_due_x_dbg\Debug\LedController.h
+ C:\Users\admin\Desktop\arduino-1.8.1\libraries\Adafruit_NeoPixel/Adafruit_NeoPixel.h

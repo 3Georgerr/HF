@@ -143,3 +143,8 @@ void HF::showIt()
 {
 	strip.show();
 }
+
+int HF::getNumOfPixels()
+{
+	return numPix;
+}

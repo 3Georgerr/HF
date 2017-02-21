@@ -69,9 +69,6 @@ void NetworkCommunication::loop()
 						// print all the files, use a helper to keep it clean
 						client.println("<h2>Files:</h2>");
 						client.println(clientline);
-
-						
-
 					}
 					else if (strstr(clientline, "GET /") != 0) {
 						// this time no space after the /, so a sub-file!
@@ -157,6 +154,8 @@ void NetworkCommunication::start()
 	server.begin();
 }
 
+
+
 NetworkCommunication::NetworkCommunication(uint8_t mac[6], IPAddress myIP)
 {
 	this->myIP = myIP;
@@ -164,6 +163,9 @@ NetworkCommunication::NetworkCommunication(uint8_t mac[6], IPAddress myIP)
 		this->mac[i] = mac[i];
 	}
 	uint8_t macv[6] = { 0x00,0x01,0x02,0x03,0x04,0x05 };
+	index = 0;
+	//*ledPasek = (HF*)malloc(numOfStrips * sizeof(HF)); //(HF*)malloc(numStrips * sizeof(HF));
+
 	//Ethernet.begin(macv, IPAddress(10, 0, 0, 34), IPAddress(8, 8, 8, 8), IPAddress(10, 0, 0, 138));
 	//Ethernet.begin(this->mac, this->myIP);
 	//server.begin();

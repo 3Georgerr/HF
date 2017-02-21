@@ -15,7 +15,7 @@ Copyright (c) 2017 Jiri seda
 #define	blinking	1
 #define	starting	2
 #define	lighting	3
-
+#define REFRESH_RATE 1000
 
 class HF {
 private:
@@ -34,7 +34,7 @@ private:
 	//mode 2 = starting
 	//mode 3 = light
 	uint8_t mode;
-	static const uint32_t REFRESH_RATE = 1000;
+	//static const uint32_t REFRESH_RATE = 1000;
 	boolean changedMode;
 
 	unsigned long lastBlink;
@@ -54,6 +54,7 @@ private:
 	uint8_t startPhase;
 
 	uint32_t confColor;
+
 	
 
 public:
@@ -67,12 +68,11 @@ public:
 		mode = 1;
 		changedMode = false;
 
-		lastBlink;
 		change = true;
+		blinkColorOne = 255000000;
+		blinkColorTwo = 000000000;
 		blinkDelay = 500;
-		blinkColorOne;
-		blinkColorTwo;
-
+	
 		svit = true;
 		startDelay = 1000;
 
@@ -83,11 +83,8 @@ public:
 		startColorThree = 255128128;
 		startPhase = 0;
 
-		confColor = 255000000;
-
-		blinkColorOne = 255000000;
-		blinkColorTwo = 000000000;
-		blinkDelay = 500;
+		confColor = color(255,000,000);
+		//confColor = 255000000; //nefunguje?
 
 		strip.begin();
 	//	confColor = color(255,0,0);
@@ -119,5 +116,7 @@ public:
 	Spustí zobrazení na pásek, citlivé na pøesnost rychlosti pøenosu
 	*/
 	void showIt();
+
+	int getNumOfPixels();
 
 };
