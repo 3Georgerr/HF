@@ -4,7 +4,8 @@
 
 #include "HF.h"
 #include "NetworkCommunication.h"
-#include <Adafruit_NeoPixel.h>
+//#include <Adafruit_NeoPixel.h>
+#include <FastLED\FastLED.h>
 #include "LedController.h"
 //#include <Scheduler.h>
 
