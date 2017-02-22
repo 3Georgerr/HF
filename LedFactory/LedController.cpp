@@ -19,6 +19,12 @@ NetworkCommunication * LedController::getNetworkCommunication()
 	return nc;
 }
 
+void LedController::loop()
+{
+	nc->loop();
+
+}
+
 void LedController::setStrip(HF * strip, uint8_t numOfStrip)
 {
 	ledStrips[numOfStrip] = strip;

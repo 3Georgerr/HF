@@ -42,8 +42,8 @@ void setup() {
 	lc.setStrip(&sesty, 5);
 	
 	//lc.getStrip(0)->blinkColor(0, 10, 1, 0, 1, 1);
-	lc.getStrip(0)->blinkColor(0, 0, 1, 0, 1, 0);
-	lc.getStrip(1)->blinkColor(1, 0, 0, 0, 0, 1);
+	//lc.getStrip(0)->blinkColor(0, 0, 1, 0, 1, 0);
+	//lc.getStrip(1)->blinkColor(1, 0, 0, 0, 0, 1);
 	
 	//prvni.blinkColor(0, 1, 1, 1, 1, 1);
 	//prvni.blinkColor(0, 10, 1, 0, 1, 1);
@@ -78,17 +78,18 @@ void loop() {
 	interrupts();
 
 	if (millis()>5000 && counter ==0) {
-		prvni.setMode(2);
-		//lc.getStrip(0)->setMode(3); //nefunguje
-		prvni.setColor(20,20,0); //nefunguje
-	//	lc.getStrip(0)->setColor(255, 255, 0);
+		//prvni.setMode(2);
+		lc.getStrip(0)->setMode(1); //nefunguje
+		//prvni.setColor(20,20,0); //nefunguje
+		//lc.getStrip(0)->setColor(255, 255, 0);
 		druhy.setMode(2);
 		lc.getStrip(1)->setColor(20, 0, 20);
 		counter++;
 		//delay(1);
-		//druhy.setMode(3);
+	//	druhy.setMode(3);
 	}
 	
+	//lc.loop();
 
 	nc.loop();
 

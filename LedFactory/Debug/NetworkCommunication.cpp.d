@@ -161,6 +161,4 @@ C:\Users\admin\AppData\Local\Temp\VMBuilds\LedFactory\arduino_due_x_dbg\Debug\Ne
  C:\Users\admin\Documents\Arduino\libraries\UIPEthernet\src/utility/uip_timer.h \
  C:\Users\admin\Documents\Arduino\libraries\UIPEthernet\src/utility/uip_clock.h \
  C:\Users\admin\Documents\Arduino\libraries\UIPEthernet\src/utility/clock-arch.h \
- C:\Users\admin\AppData\Local\Temp\VMBuilds\LedFactory\arduino_due_x_dbg\Debug\HF.h \
- C:\Users\admin\Desktop\arduino-1.8.1\libraries\Adafruit_NeoPixel/Adafruit_NeoPixel.h \
  C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/arduino.h

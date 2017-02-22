@@ -36,7 +36,31 @@ int NetworkCommunication::parseUrlParams(char *queryString, char *results[][2], 
 void NetworkCommunication::loop()
 {
 		 index = 0;
-		EthernetClient client = server.available();
+		 resultsCt = 0;
+		
+
+
+		 // listen for incoming clients
+		 EthernetClient client = server.available();
+		 if (client) {
+			 // an http request ends with a blank line
+			 boolean currentLineIsBlank = true;
+			 while (client.connected()) {
+				 if (client.available()) {
+					 client.read();
+				 }
+			 }
+			 // give the web browser time to receive the data
+			 delay(1);
+			 // close the connection:
+			 client.stop();
+		 }
+
+
+
+
+		 /*
+		 EthernetClient client = server.available();
 
 		if (client) {
 			// an http request ends with a blank line
@@ -86,7 +110,7 @@ void NetworkCommunication::loop()
 						client.println("<h2>File Not Found!</h2>");
 						break;
 						}
-						*/
+						*//*
 						//	Serial.println("Opened!");
 						client.println("HTTP/1.1 200 OK");
 						client.println("Content-Type: text/plain");
@@ -108,7 +132,7 @@ void NetworkCommunication::loop()
 						// parse the buffer into params[][]
 						//pokud bychom pouzili buffer
 						//int resultsCt = parseUrlParams(bud, params, 5, true);
-						int resultsCt = parseUrlParams(&clientline[5], params, 5, true);
+						resultsCt = parseUrlParams(&clientline[5], params, 5, true);
 
 						client.println("\" produced ");
 						client.println(resultsCt);
@@ -140,9 +164,9 @@ void NetworkCommunication::loop()
 			}
 			// give the web browser time to receive the data
 			delay(1);
-			client.stop();
+		//	client.stop();
 		}
-	
+	*/
 }
 
 void NetworkCommunication::start()
@@ -154,6 +178,11 @@ void NetworkCommunication::start()
 	server.begin();
 }
 
+uint8_t NetworkCommunication::getResults()
+{
+	return resultsCt;
+}
+
 
 
 NetworkCommunication::NetworkCommunication(uint8_t mac[6], IPAddress myIP)
@@ -162,8 +191,9 @@ NetworkCommunication::NetworkCommunication(uint8_t mac[6], IPAddress myIP)
 	for (int i = 0; i < 6; i++) {
 		this->mac[i] = mac[i];
 	}
-	uint8_t macv[6] = { 0x00,0x01,0x02,0x03,0x04,0x05 };
+	//uint8_t macv[6] = { 0x00,0x01,0x02,0x03,0x04,0x05 };
 	index = 0;
+	resultsCt = 0;
 	//*ledPasek = (HF*)malloc(numOfStrips * sizeof(HF)); //(HF*)malloc(numStrips * sizeof(HF));
 
 	//Ethernet.begin(macv, IPAddress(10, 0, 0, 34), IPAddress(8, 8, 8, 8), IPAddress(10, 0, 0, 138));

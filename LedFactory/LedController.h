@@ -26,6 +26,6 @@ public:
 	void setNetworkcommunication(NetworkCommunication *nc);
 	HF* getStrip(uint8_t numOfStrip);
 	NetworkCommunication* getNetworkCommunication();
-
+	void loop();
 
 };
