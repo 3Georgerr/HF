@@ -5,10 +5,57 @@ Copyright (c) 2017 Jiri seda
 
 #include "HF.h"
 
+HF::HF(uint16_t n, uint8_t p = 6, uint8_t t = NEO_GRB + NEO_KHZ800)
+{
+	strip = Adafruit_NeoPixel(n, p, t);
+	numPix = n;
+
+	lastBlink = millis();
+
+	mode = 1;
+	changedMode = false;
+
+	change = true;
+	blinkColorOne = 16711680;
+	blinkColorTwo = 0;
+	blinkDelay = 500;
+
+	svit = true;
+	startDelay = 1000;
+
+	//Startuj
+	startTime;
+	startColorOne = 16744576;
+	startColorTwo = 16744576;
+	startColorThree = 16744576;
+
+	startColorOne = 16711680;
+	startColorTwo = 16711680;
+	startColorThree = 16711680;
+	startPhase = 0;
+
+	//	confColor = color(255,000,000);
+	confColor = 16711680; //nefunguje?
+
+	strip.begin();
+	//	confColor = color(255,0,0);
+}
+
+uint32_t HF::color(uint8_t red, uint8_t green, uint8_t blue) {
+	return (red << 16) | (green << 8) | blue;
+}
+
+void HF::blinkColor(uint8_t redFirst, uint8_t greenFirst, uint8_t blueFirst) {
+	blinkColorOne = color(redFirst, greenFirst, blueFirst);
+}
+void HF::blinkColor(uint8_t redFirst, uint8_t greenFirst, uint8_t blueFirst, uint8_t redSecond, uint8_t greenSecond, uint8_t blueSecond) {
+	blinkColorOne = color(redFirst, greenFirst, blueFirst);
+	blinkColorTwo = color(redSecond, greenSecond, blueSecond);
+}
 
 void HF::blikej() {
 	//Hlídá interval pro zmìnu stavu
-	if (lastBlink + blinkDelay<millis()) {
+	if (lastBlink + blinkDelay<=millis()) {
 		change = true;
 		lastBlink = millis();
 	}
@@ -33,7 +80,7 @@ void HF::blikej() {
 }
 
 void HF::startuj() {
-	if (startTime + startDelay < millis()) {
+	if (startTime + startDelay <= millis()) {
 		change = true;
 	}
 
@@ -67,6 +114,7 @@ void HF::startuj() {
 		default:
 		//Po odstartování vypne pásek;
 			setMode(0);
+			startPhase = 0;
 			break;
 		}
 		startPhase++;

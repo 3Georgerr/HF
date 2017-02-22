@@ -23,9 +23,11 @@ private:
 public:
 	LedController(uint8_t numOfStrips);
 	void setStrip(HF *strip, uint8_t numOfStrip);
-	void setNetworkcommunication(NetworkCommunication *nc);
 	HF* getStrip(uint8_t numOfStrip);
+
+	void setNetworkcommunication(NetworkCommunication &nc);
 	NetworkCommunication* getNetworkCommunication();
+	
 	void loop();
 
 };

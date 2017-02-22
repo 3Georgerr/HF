@@ -37,7 +37,7 @@ private:
 	//static const uint32_t REFRESH_RATE = 1000;
 	boolean changedMode;
 
-	unsigned long lastBlink;
+	uint32_t lastBlink;
 	boolean change;
 	uint32_t blinkDelay;
 	uint32_t blinkColorOne;
@@ -58,54 +58,12 @@ private:
 	
 
 public:
-	HF(uint16_t n, uint8_t p = 6, uint8_t t = NEO_GRB + NEO_KHZ800)
-	{
-		strip = Adafruit_NeoPixel(n, p, t);
-		numPix = n;
+	HF(uint16_t n, uint8_t p, uint8_t t);
 
-		lastBlink = millis();
-		
-		mode = 1;
-		changedMode = false;
+	uint32_t color(uint8_t red, uint8_t green, uint8_t blue);
 
-		change = true;
-		blinkColorOne = 16711680;
-		blinkColorTwo = 0;
-		blinkDelay = 500;
-	
-		svit = true;
-		startDelay = 1000;
-
-		//Startuj
-		startTime;
-		startColorOne = 16744576;
-		startColorTwo = 16744576;
-		startColorThree = 16744576;
-		
-		startColorOne = 16711680;
-		startColorTwo = 16711680;
-		startColorThree = 16711680;
-		startPhase = 0;
-
-	//	confColor = color(255,000,000);
-		confColor = 16711680; //nefunguje?
-
-		strip.begin();
-	//	confColor = color(255,0,0);
-	}
-
-	uint32_t color(uint8_t red, uint8_t green, uint8_t blue) {
-		return (red << 16) | (green << 8) | blue;
-	}
-
-	void blinkColor(uint8_t redFirst, uint8_t greenFirst, uint8_t blueFirst) {
-		blinkColorOne = color(redFirst, greenFirst, blueFirst);
-	}
-
-	void blinkColor(uint8_t redFirst, uint8_t greenFirst, uint8_t blueFirst, uint8_t redSecond, uint8_t greenSecond, uint8_t blueSecond) {
-		blinkColorOne = color(redFirst, greenFirst, blueFirst);
-		blinkColorTwo = color(redSecond, greenSecond, blueSecond);
-	}
+	void blinkColor(uint8_t redFirst, uint8_t greenFirst, uint8_t blueFirst);
+	void blinkColor(uint8_t redFirst, uint8_t greenFirst, uint8_t blueFirst, uint8_t redSecond, uint8_t greenSecond, uint8_t blueSecond);
 	
 	void blikej();
 	void startuj();

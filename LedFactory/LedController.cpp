@@ -7,8 +7,8 @@
 LedController::LedController(uint8_t numOfStrips)
 {
 	ledStrips = new HF*[numOfStrips];
-	//this->ledPasek = ledPasek;
 }
+
 HF * LedController::getStrip(uint8_t numOfStrip)
 {
 	return ledStrips[numOfStrip];
@@ -30,7 +30,7 @@ void LedController::setStrip(HF * strip, uint8_t numOfStrip)
 	ledStrips[numOfStrip] = strip;
 }
 
-void LedController::setNetworkcommunication(NetworkCommunication * nc)
+void LedController::setNetworkcommunication(NetworkCommunication & nc)
 {
-	this->nc = nc;
+	this->nc = &nc;
 }

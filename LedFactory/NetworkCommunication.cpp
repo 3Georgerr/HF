@@ -37,30 +37,7 @@ void NetworkCommunication::loop()
 {
 		 index = 0;
 		 resultsCt = 0;
-		
-
-
-		 // listen for incoming clients
-		 EthernetClient client = server.available();
-		 if (client) {
-			 // an http request ends with a blank line
-			 boolean currentLineIsBlank = true;
-			 while (client.connected()) {
-				 if (client.available()) {
-					 client.read();
-				 }
-			 }
-			 // give the web browser time to receive the data
-			 delay(1);
-			 // close the connection:
-			 client.stop();
-		 }
-
-
-
-
-		 /*
-		 EthernetClient client = server.available();
+		EthernetClient client = server.available();
 
 		if (client) {
 			// an http request ends with a blank line
@@ -110,7 +87,7 @@ void NetworkCommunication::loop()
 						client.println("<h2>File Not Found!</h2>");
 						break;
 						}
-						*//*
+						*/
 						//	Serial.println("Opened!");
 						client.println("HTTP/1.1 200 OK");
 						client.println("Content-Type: text/plain");
@@ -120,6 +97,8 @@ void NetworkCommunication::loop()
 						// uncomment the serial to debug (slow!)
 						//Serial.print((char)c);
 						client.println(clientline);
+
+						/*
 
 						//char buf[BUFSIZ];
 						char *params[5][2];
@@ -138,7 +117,7 @@ void NetworkCommunication::loop()
 						client.println(resultsCt);
 						client.println(" parameters:");
 						client.println();
-
+						
 						for (int i = 0; i < resultsCt; i++) {
 							client.println("param ");
 							client.println(i);
@@ -149,6 +128,7 @@ void NetworkCommunication::loop()
 							client.println("\".");
 							client.println();
 						}
+						*/
 						// }
 						//          file.close();
 					}
@@ -164,9 +144,9 @@ void NetworkCommunication::loop()
 			}
 			// give the web browser time to receive the data
 			delay(1);
-		//	client.stop();
+			client.stop();
 		}
-	*/
+	
 }
 
 void NetworkCommunication::start()
