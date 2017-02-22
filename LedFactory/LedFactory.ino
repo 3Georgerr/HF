@@ -6,12 +6,12 @@
 #include "NetworkCommunication.h"
 #include <Adafruit_NeoPixel.h>
 #include "LedController.h"
-#include <Scheduler.h>
+//#include <Scheduler.h>
 
-HF prvni = HF(1090, 6, NEO_GRB + NEO_KHZ800);
+HF prvni = HF(90, 6, NEO_GRB + NEO_KHZ800);
 HF druhy = HF(1090, 2, NEO_GRB + NEO_KHZ800);
-HF treti = HF(1240, 1, NEO_GRB + NEO_KHZ800);
-HF ctvrty = HF(1240, 3, NEO_GRB + NEO_KHZ800);
+HF treti = HF(360, 1, NEO_GRB + NEO_KHZ800);
+HF ctvrty = HF(360, 3, NEO_GRB + NEO_KHZ800);
 HF paty = HF(1240, 4, NEO_GRB + NEO_KHZ800);
 HF sesty = HF(1240, 5, NEO_GRB + NEO_KHZ800);
 uint32_t counter = 0;
@@ -20,6 +20,9 @@ uint8_t mac[6] = { 0x00,0x01,0x02,0x03,0x04,0x05 };
 IPAddress ip = IPAddress(10, 0, 0, 34);
 NetworkCommunication nc = NetworkCommunication(mac, ip);
 LedController lc = LedController(6);
+
+uint32_t interval = 100;
+uint32_t lastTime = 0;
 
 void setup() {
 	// put your setup code here, to run once:
@@ -58,33 +61,35 @@ void setup() {
 
 	nc.start();
 
-	Scheduler.startLoop(loop2);
+	//Scheduler.startLoop(loop2);
 }
 
 void loop() {
-	uint32_t test = millis();
-	//delay(10);
-	//Vykresli pásky, zakaž pøerušení
-	//noInterrupts();
-	if (test % 100 == 1) {
-		druhy.showIt();
+
+	//showIT vyraznì zpomaluje
+	if (lastTime+interval < millis()) {
+		lastTime = millis();
+		prvni.loop();
+		druhy.loop();
+		treti.loop();
+		ctvrty.loop();
 		prvni.showIt();
+		druhy.showIt();
 		treti.showIt();
 		ctvrty.showIt();
-		paty.showIt();
-		sesty.showIt();
+		//	paty.loop();
+		//	sesty.loop();
 	}
-	//interrupts();
-	//lc.getStrip(0)->setMode(1);
 	
-	if (millis()%10000==1) {
+	
+	if (millis()%10000==1 &&  counter==0) {
 		//prvni.setMode(2);
-		lc.getStrip(0)->setMode(2); 
-		lc.getStrip(1)->setMode(2);
-		lc.getStrip(2)->setMode(2);
-		lc.getStrip(3)->setMode(2);
-		lc.getStrip(4)->setMode(2);
-		lc.getStrip(5)->setMode(2);
+		lc.getStrip(1)->setMode(3); 
+		//lc.getStrip(1)->setMode(2);
+		//lc.getStrip(2)->setMode(2);
+		//lc.getStrip(3)->setMode(2);
+		//lc.getStrip(4)->setMode(2);
+		//lc.getStrip(5)->setMode(2);
 		//prvni.setColor(20,20,0);
 		//lc.getStrip(0)->setColor(255, 255, 0);
 		//druhy.setMode(2);
@@ -99,19 +104,13 @@ void loop() {
 
 	//puvodni volani network loopu
 	//nc.loop();
-	yield();
+	//Pri zprovozneni scheduleru
+	//yield();
 }
 
+/*
 void loop2(){
 
-uint32_t test = millis();
-if (test % 100 == 1) {
-	druhy.loop();
-	prvni.loop();
-	treti.loop();
-	ctvrty.loop();
-	paty.loop();
-	sesty.loop();
-}
 yield();
 }
+*/
