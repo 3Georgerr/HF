@@ -30,4 +30,6 @@ public:
 	
 	void loop();
 
+	void getParams();
+
 };

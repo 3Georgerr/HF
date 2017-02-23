@@ -1,6 +1,5 @@
 /*  HF - High Flow WS2811 LED Library
 Copyright (c) 2017 Jiri seda
-
 */
 #pragma once
 #ifndef HF_h
@@ -21,16 +20,16 @@ class HF {
 private:
 	// Parameter 1 = number of pixels in strip
 	// Parameter 2 = pin number (most are valid)
-
 	CRGB *leds;
-	
 	uint16_t numPix;
+	
 	//mode 0 = vypnuto
 	//mode 1 = blinking
 	//mode 2 = starting
 	//mode 3 = light
 	uint8_t mode;
-	//static const uint32_t REFRESH_RATE = 1000;
+	
+	//Omezujeme prepis modu
 	boolean changedMode;
 
 	uint32_t lastBlink;
@@ -38,17 +37,18 @@ private:
 	uint32_t blinkDelay;
 	CRGB blinkColorOne;
 	CRGB blinkColorTwo;
-
-	boolean svit;
+	boolean lightOn;
+	
 	uint32_t startDelay;
 
-	//Startuj
+	//parametry pro tartovani
 	unsigned long startTime;
 	CRGB startColorOne;
 	CRGB startColorTwo;
 	CRGB startColorThree;
 	uint8_t startPhase;
 
+	//barva pro staly svit
 	CRGB confColor;
 	
 	
@@ -62,9 +62,10 @@ public:
 	void blinkColor(uint8_t redFirst, uint8_t greenFirst, uint8_t blueFirst);
 	void blinkColor(uint8_t redFirst, uint8_t greenFirst, uint8_t blueFirst, uint8_t redSecond, uint8_t greenSecond, uint8_t blueSecond);
 	
-	void blikej();
-	void startuj();
-	void vypnout();
+	void blink();
+	void blinkDuo();
+	void start();
+	void turnOff();
 	void loop();
 	void light();
 

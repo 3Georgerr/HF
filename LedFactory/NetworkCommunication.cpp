@@ -152,7 +152,6 @@ void NetworkCommunication::loop()
 void NetworkCommunication::start()
 {
 	//uint8_t macv[6] = { 0x00,0x01,0x02,0x03,0x04,0x05 };
-
 	//Ethernet.begin(macv, IPAddress(10, 0, 0, 34), IPAddress(8, 8, 8, 8), IPAddress(10, 0, 0, 138));
 	Ethernet.begin(this->mac, this->myIP);
 	server.begin();
@@ -163,23 +162,14 @@ uint8_t NetworkCommunication::getResults()
 	return resultsCt;
 }
 
-
-
 NetworkCommunication::NetworkCommunication(uint8_t mac[6], IPAddress myIP)
 {
 	this->myIP = myIP;
 	for (int i = 0; i < 6; i++) {
 		this->mac[i] = mac[i];
 	}
-	//uint8_t macv[6] = { 0x00,0x01,0x02,0x03,0x04,0x05 };
 	index = 0;
-	resultsCt = 0;
-	//*ledPasek = (HF*)malloc(numOfStrips * sizeof(HF)); //(HF*)malloc(numStrips * sizeof(HF));
-
-	//Ethernet.begin(macv, IPAddress(10, 0, 0, 34), IPAddress(8, 8, 8, 8), IPAddress(10, 0, 0, 138));
-	//Ethernet.begin(this->mac, this->myIP);
-	//server.begin();
-	
+	resultsCt = 0;	
 }
 
 /**

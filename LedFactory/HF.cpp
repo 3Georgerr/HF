@@ -12,26 +12,27 @@ HF::HF(uint16_t n,uint8_t p = 6)
 	
 	for (int i = 0; i < n; i++)
 	{
-		leds[i] = CRGB::Purple;
+		leds[i] = CRGB::Black;
 	}
 
 	numPix = n;
 
-	lastBlink = millis();
+	lastBlink = 0;
 
 	mode = 1;
 	changedMode = false;
 
+	//parametry blikani
+	lightOn = true;
 	change = true;
 	blinkColorOne = CRGB(255, 0, 0);
 	blinkColorTwo = CRGB(0,0,0);
 	blinkDelay = 500;
-
-	svit = true;
-	startDelay = 1000;
+	
 
 	//Startuj
-	startTime;
+	startTime=0;
+	startDelay = 1000;
 	startColorOne = CRGB(255, 0, 0);
 	startColorTwo = CRGB(255, 0, 0);
 	startColorThree = CRGB(255, 0, 0);
@@ -41,7 +42,7 @@ HF::HF(uint16_t n,uint8_t p = 6)
 	startColorThree = CRGB(255, 0, 0);
 	startPhase = 0;
 
-		confColor = CRGB(255,0,0);
+	confColor = CRGB(255,0,0);
 }
 
 CRGB HF::Color(uint8_t red, uint8_t green, uint8_t blue) {
@@ -56,7 +57,7 @@ void HF::blinkColor(uint8_t redFirst, uint8_t greenFirst, uint8_t blueFirst, uin
 	blinkColorTwo = CRGB(redSecond, greenSecond, blueSecond);
 }
 
-void HF::blikej() {
+void HF::blink() {
 	//Hlídá interval pro zmìnu stavu
 	if (lastBlink + blinkDelay<=millis()) {
 		change = true;
@@ -65,17 +66,47 @@ void HF::blikej() {
 	//Pokud se zmìnil stav, rozsvítí/zhasne pásek
 	if (change == true) {
 		change = false;
-		if (svit == true) {
+		if (lightOn == true) {
 			fill_solid(&(leds[0]), numPix, blinkColorOne);
 		}
 		else {
 			fill_solid(&(leds[0]), numPix, blinkColorTwo);
 		}
-		svit = !svit;
+		lightOn = !lightOn;
 	}
 }
 
-void HF::startuj() {
+void HF::blinkDuo()
+{
+	//Hlídá interval pro zmìnu stavu
+	if (lastBlink + blinkDelay <= millis()) {
+		change = true;
+		lastBlink = millis();
+	}
+	//Pokud se zmìnil stav, rozsvítí/zhasne pásek
+	if (change == true) {
+		change = false;
+		if (lightOn == true) {
+			for (int i = 0; i <numPix; i +=2) {
+				leds[i] = blinkColorOne;
+			}
+			for (int i = 1; i<numPix; i +=2) {
+				leds[i] = blinkColorTwo;
+			}
+		}
+		else {
+			for (int i = 0; i<numPix; i +=2) {
+				leds[i] = blinkColorTwo;
+			}
+			for (int i = 1; i < numPix; i+=2) {
+				leds[i] = blinkColorOne;
+			}
+		}
+		lightOn = !lightOn;
+	}
+}
+
+void HF::start() {
 	if (startTime + startDelay <= millis()) {
 		change = true;
 	}
@@ -106,7 +137,7 @@ void HF::startuj() {
 	}
 }
 
-void HF::vypnout()
+void HF::turnOff()
 {
 	if (changedMode || (millis() % REFRESH_RATE) ) {
 		fill_solid(&(leds[0]), numPix, CRGB(0,0,0));
@@ -120,16 +151,19 @@ void HF::vypnout()
 void HF::loop() {
 	switch (mode) {
 	case 0:
-		vypnout();
+		turnOff();
 		break;
 	case 1:
-		blikej();
+		blink();
 		break;
 	case 2:
-		startuj();
+		start();
 		break;
 	case 3:
 		light();
+		break;
+	case 4:
+		blinkDuo();
 		break;
 	default:
 		break;
@@ -152,7 +186,7 @@ void HF::setMode(uint8_t mode)
 
 	if (mode == 1) {
 		change = true;
-		svit = true;
+		lightOn = true;
 
 	}
 }
