@@ -9,14 +9,30 @@
 #include "LedController.h"
 //#include <Scheduler.h>
 
-HF prvni = HF(90, 6, NEO_GRB + NEO_KHZ800);
-HF druhy = HF(1090, 2, NEO_GRB + NEO_KHZ800);
-HF treti = HF(360, 1, NEO_GRB + NEO_KHZ800);
-HF ctvrty = HF(360, 3, NEO_GRB + NEO_KHZ800);
-HF paty = HF(1240, 4, NEO_GRB + NEO_KHZ800);
-HF sesty = HF(1240, 5, NEO_GRB + NEO_KHZ800);
-uint32_t counter = 0;
+#define NUMLEDFIRST 1024
+#define NUMLEDSECOND 1024
+#define NUMLEDTHIRD 1024
+#define NUMLEDFOURTH 1024
+#define NUMLEDFIFTH 1024
+#define NUMLEDSIXTH 1024
 
+#define PINSTRIPONE 1
+#define PINSTRIPTWO 6
+#define PINSTRIPTHREE 2
+#define PINSTRIPFOUR 3
+#define PINSTRIPFIVE 4
+#define PINSTRIPSIX 5
+
+
+HF prvni = HF(NUMLEDFIRST, PINSTRIPONE);
+HF druhy = HF(NUMLEDSECOND, PINSTRIPTWO);
+HF treti = HF(NUMLEDTHIRD, PINSTRIPTHREE);
+HF ctvrty = HF(NUMLEDFOURTH, PINSTRIPFOUR);
+HF paty = HF(NUMLEDFIFTH, PINSTRIPFIVE);
+HF sesty = HF(NUMLEDSIXTH, PINSTRIPSIX);
+
+
+uint32_t counter = 0;
 uint8_t mac[6] = { 0x00,0x01,0x02,0x03,0x04,0x05 };
 IPAddress ip = IPAddress(10, 0, 0, 34);
 NetworkCommunication nc = NetworkCommunication(mac, ip);
@@ -29,17 +45,27 @@ void setup() {
 	// put your setup code here, to run once:
 	
 	//Pro testování funkcí, neøešíme èasování
-	/*
-	prvni = HF(60, 6, NEO_GRB + NEO_KHZ800);
-	druhy = HF(90, 2, NEO_GRB + NEO_KHZ800);
-	treti = HF(40, 1, NEO_GRB + NEO_KHZ800);
-	ctvrty = HF(40, 3, NEO_GRB + NEO_KHZ800);
-	paty = HF(40, 4, NEO_GRB + NEO_KHZ800);
-	sesty = HF(40, 5, NEO_GRB + NEO_KHZ800);
-	*/
+
+	HF prvni = HF(NUMLEDFIRST, PINSTRIPONE);
+	HF druhy = HF(NUMLEDSECOND, PINSTRIPTWO);
+	HF treti = HF(NUMLEDTHIRD, PINSTRIPTHREE);
+	HF ctvrty = HF(NUMLEDFOURTH, PINSTRIPFOUR);
+	HF paty = HF(NUMLEDFIFTH, PINSTRIPFIVE);
+	HF sesty = HF(NUMLEDSIXTH, PINSTRIPSIX);
+
+
+	
+	FastLED.addLeds<NEOPIXEL, PINSTRIPONE>(prvni.getLedArray(), NUMLEDFIRST);
+	FastLED.addLeds<NEOPIXEL, PINSTRIPTWO>(druhy.getLedArray(), NUMLEDSECOND);
+	FastLED.addLeds<NEOPIXEL, PINSTRIPTHREE>(treti.getLedArray(), NUMLEDTHIRD);
+	FastLED.addLeds<NEOPIXEL, PINSTRIPFOUR>(ctvrty.getLedArray(), NUMLEDFOURTH);
+	FastLED.addLeds<NEOPIXEL, PINSTRIPFIVE>(paty.getLedArray(), NUMLEDFIFTH);
+	FastLED.addLeds<NEOPIXEL, PINSTRIPSIX>(sesty.getLedArray(), NUMLEDSIXTH);
+	
 
 	ip = IPAddress(10, 0, 0, 34);
 	nc = NetworkCommunication(mac, ip);
+	
 	
 	lc.setStrip(&prvni, 0);
 	lc.setStrip(&druhy, 1);
@@ -51,14 +77,14 @@ void setup() {
 	
 	
 	//lc.getStrip(0)->blinkColor(0, 10, 1, 0, 1, 1);
-	//lc.getStrip(0)->blinkColor(0, 0, 1, 0, 1, 0);
+	//lc.getStrip(0)->blinkCRGB(0, 0, 1, 0, 1, 0);
 	//lc.getStrip(1)->blinkColor(1, 0, 0, 0, 0, 1);
 	
-	//prvni.blinkColor(0, 1, 1, 1, 1, 1);
-	//prvni.blinkColor(0, 10, 1, 0, 1, 1);
-	//prvni.blinkColor(0, 0, 255);
-	//druhy.blinkColor(1, 0, 0, 0, 1, 0);
-	//prvni.blinkColor(0, 0, 255, 0, 255, 0);
+	//prvni.blinkCRGB(0, 1, 1, 1, 1, 1);
+	//prvni.blinkCRGB(0, 10, 1, 0, 1, 1);
+	//prvni.blinkCRGB(0, 0, 255);
+	//druhy.blinkCRGB(1, 0, 0, 0, 1, 0);
+	//prvni.blinkCRGB(0, 0, 255, 0, 255, 0);
 
 	nc.start();
 
@@ -66,35 +92,31 @@ void setup() {
 }
 
 void loop() {
-
 	//showIT vyraznì zpomaluje
 	if (lastTime+interval < millis()) {
 		lastTime = millis();
-		prvni.loop();
-		druhy.loop();
-		treti.loop();
-		ctvrty.loop();
-		prvni.showIt();
-		druhy.showIt();
-		treti.showIt();
-		ctvrty.showIt();
-		//	paty.loop();
-		//	sesty.loop();
+		FastLED.show();
 	}
-	
+
+	lc.getStrip(0)->loop();
+	lc.getStrip(1)->loop();
+	lc.getStrip(2)->loop();
+	lc.getStrip(3)->loop();
+	lc.getStrip(4)->loop();
+	lc.getStrip(5)->loop();
 	
 	if (millis()%10000==1 &&  counter==0) {
 		//prvni.setMode(2);
-		lc.getStrip(1)->setMode(3); 
+		//lc.getStrip(1)->setMode(3); 
 		//lc.getStrip(1)->setMode(2);
 		//lc.getStrip(2)->setMode(2);
 		//lc.getStrip(3)->setMode(2);
 		//lc.getStrip(4)->setMode(2);
 		//lc.getStrip(5)->setMode(2);
-		//prvni.setColor(20,20,0);
-		//lc.getStrip(0)->setColor(255, 255, 0);
+		//prvni.setCRGB(20,20,0);
+		//lc.getStrip(0)->setCRGB(255, 255, 0);
 		//druhy.setMode(2);
-		//lc.getStrip(1)->setColor(20, 0, 20);
+		//lc.getStrip(1)->setCRGB(20, 0, 20);
 		counter++;
 		//delay(1);
 		//druhy.setMode(1);
@@ -105,6 +127,7 @@ void loop() {
 
 	//puvodni volani network loopu
 	//nc.loop();
+	
 	//Pri zprovozneni scheduleru
 	//yield();
 }

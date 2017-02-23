@@ -5,9 +5,16 @@ Copyright (c) 2017 Jiri seda
 
 #include "HF.h"
 
-HF::HF(uint16_t n, uint8_t p = 6, uint8_t t = NEO_GRB + NEO_KHZ800)
+HF::HF(uint16_t n,uint8_t p = 6)
 {
-	strip = Adafruit_NeoPixel(n, p, t);
+	leds = new CRGB[n];
+
+	
+	for (int i = 0; i < n; i++)
+	{
+		leds[i] = CRGB::Purple;
+	}
+
 	numPix = n;
 
 	lastBlink = millis();
@@ -16,8 +23,8 @@ HF::HF(uint16_t n, uint8_t p = 6, uint8_t t = NEO_GRB + NEO_KHZ800)
 	changedMode = false;
 
 	change = true;
-	blinkColorOne = 16711680;
-	blinkColorTwo = 0;
+	blinkColorOne = CRGB(255, 0, 0);
+	blinkColorTwo = CRGB(0,0,0);
 	blinkDelay = 500;
 
 	svit = true;
@@ -25,32 +32,28 @@ HF::HF(uint16_t n, uint8_t p = 6, uint8_t t = NEO_GRB + NEO_KHZ800)
 
 	//Startuj
 	startTime;
-	startColorOne = 16744576;
-	startColorTwo = 16744576;
-	startColorThree = 16744576;
+	startColorOne = CRGB(255, 0, 0);
+	startColorTwo = CRGB(255, 0, 0);
+	startColorThree = CRGB(255, 0, 0);
 
-	startColorOne = 16711680;
-	startColorTwo = 16711680;
-	startColorThree = 16711680;
+	startColorOne = CRGB(255, 0, 0);
+	startColorTwo = CRGB(255, 0, 0);
+	startColorThree = CRGB(255, 0, 0);
 	startPhase = 0;
 
-	//	confColor = color(255,000,000);
-	confColor = 16711680; //nefunguje?
-
-	strip.begin();
-	//	confColor = color(255,0,0);
+		confColor = CRGB(255,0,0);
 }
 
-uint32_t HF::color(uint8_t red, uint8_t green, uint8_t blue) {
-	return (red << 16) | (green << 8) | blue;
+CRGB HF::Color(uint8_t red, uint8_t green, uint8_t blue) {
+	return CRGB(red, green, blue);
 }
 
 void HF::blinkColor(uint8_t redFirst, uint8_t greenFirst, uint8_t blueFirst) {
-	blinkColorOne = color(redFirst, greenFirst, blueFirst);
+	blinkColorOne = CRGB(redFirst, greenFirst, blueFirst);
 }
 void HF::blinkColor(uint8_t redFirst, uint8_t greenFirst, uint8_t blueFirst, uint8_t redSecond, uint8_t greenSecond, uint8_t blueSecond) {
-	blinkColorOne = color(redFirst, greenFirst, blueFirst);
-	blinkColorTwo = color(redSecond, greenSecond, blueSecond);
+	blinkColorOne = CRGB(redFirst, greenFirst, blueFirst);
+	blinkColorTwo = CRGB(redSecond, greenSecond, blueSecond);
 }
 
 void HF::blikej() {
@@ -63,18 +66,11 @@ void HF::blikej() {
 	if (change == true) {
 		change = false;
 		if (svit == true) {
-			//for (uint16_t i = 0; i<strip.numPixels(); i++) {
-			//	strip.setPixelColor(i, blinkColorOne);
-			//}
-			strip.setStripColor(blinkColorOne);
+			fill_solid(&(leds[0]), numPix, blinkColorOne);
 		}
 		else {
-			//for (uint16_t i = 0; i<strip.numPixels(); i++) {
-			//	strip.setPixelColor(i, blinkColorTwo);
-			//}
-			strip.setStripColor(blinkColorTwo);
+			fill_solid(&(leds[0]), numPix, blinkColorTwo);
 		}
-		//strip.show();
 		svit = !svit;
 	}
 }
@@ -90,26 +86,15 @@ void HF::startuj() {
 
 		switch (startPhase) {
 		case 0:
-			for (uint16_t i = 0; i < numPix*0.33; i++) {
-				strip.setPixelColor(i, startColorOne);
-			}
-			for (uint16_t i = numPix*0.33; i < numPix; i++) {
-				strip.setPixelColor(i, strip.Color(0, 0, 0));
-			}
+			fill_solid(&(leds[0]), numPix*0.33, startColorOne);
+			fill_solid(&(leds[ulong(1+numPix*0.33)]), numPix- 1 + numPix*0.33, CRGB(0,0,0));
 			break;
 		case 1:
-			for (uint16_t i = 0; i < numPix*0.66; i++) {
-				strip.setPixelColor(i, startColorTwo);
-			}
-			for (uint16_t i = numPix*0.66; i < numPix; i++) {
-				strip.setPixelColor(i, strip.Color(0, 0, 0));
-			}
+			fill_solid(&(leds[0]), numPix*0.66, startColorTwo);
+			fill_solid(&(leds[ulong(1 + numPix*0.66)]), numPix - 1 + numPix*0.66, CRGB(0,0,0));
 			break;
 		case 2:
-			//for (uint16_t i = 0; i < numPix; i++) {
-			//	strip.setPixelColor(i, startColorThree);
-			//}
-			strip.setStripColor(startColorThree);
+			fill_solid(&(leds[0]), numPix, startColorThree);
 			break;
 		default:
 		//Po odstartování vypne pásek;
@@ -124,11 +109,7 @@ void HF::startuj() {
 void HF::vypnout()
 {
 	if (changedMode || (millis() % REFRESH_RATE) ) {
-		//for (uint16_t i = 0; i < numPix; i++) {
-		//	strip.setPixelColor(i, strip.Color(0, 0, 0));
-		//}
-		strip.setStripColor(strip.Color(0, 0, 0));
-		//strip.show();
+		fill_solid(&(leds[0]), numPix, CRGB(0,0,0));
 	}
 }
 
@@ -160,10 +141,7 @@ void HF::light()
 {
 	//Obnovuje nastavení svìtel, pokud se zmìní stav nebo uteklo 1000 sekund 
 	if (changedMode || (millis() % REFRESH_RATE)) {
-		//for (uint16_t i = 0; i < numPix; i++) {
-			//strip.setPixelColor(i, confColor);
-		//}
-		strip.setStripColor(confColor);
+		fill_solid(&(leds[0]), numPix, confColor);
 	}
 }
 
@@ -181,15 +159,16 @@ void HF::setMode(uint8_t mode)
 
 void HF::setColor(uint8_t r, uint8_t g, uint8_t b)
 {
-	confColor = ((uint32_t)r << 16) | ((uint32_t)g << 8) | b;
+	confColor = CRGB(r,g,b);
 }
 
-void HF::showIt()
-{
-	strip.show();
-}
 
 int HF::getNumOfPixels()
 {
 	return numPix;
+}
+
+CRGB * HF::getLedArray()
+{
+	return leds;
 }
