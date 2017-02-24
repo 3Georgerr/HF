@@ -22,8 +22,10 @@ private:
 	uint8_t mac[6];
 	char clientline[BUFSIZ];
 	int index;
-	uint8_t resultsCt;
 
+
+	uint8_t resultsCt;
+	char *params[5][2];
 
 public:
 	//mac { 0x00,0x01,0x02,0x03,0x04,0x05 }

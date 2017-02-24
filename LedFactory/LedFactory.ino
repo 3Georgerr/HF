@@ -99,17 +99,23 @@ void loop() {
 		FastLED.show();
 	}
 
+	lc.loop();
+
+	//Testovani
+	if (millis()>10000 == 1 && counter == 0) {
+		lc.getStrip(0)->setMode(4);
+	}
+
+	/*
+	//nyni probiha v hlavni smycce ledControlleru
 	lc.getStrip(0)->loop();
 	lc.getStrip(1)->loop();
 	lc.getStrip(2)->loop();
 	lc.getStrip(3)->loop();
 	lc.getStrip(4)->loop();
 	lc.getStrip(5)->loop();
-
+	*/
 	
-	if (millis()>10000==1 && counter==0) {
-	lc.getStrip(0)->setMode(4);
-	}
 	/*
 		//prvni.setMode(2);
 		//lc.getStrip(1)->setMode(3); 
@@ -128,7 +134,7 @@ void loop() {
 	}
 	*/
 
-	lc.loop();
+	
 	//puvodni volani network loopu
 	//nc.loop();
 	

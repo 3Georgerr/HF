@@ -19,6 +19,7 @@ class LedController {
 private:
 	//pro nastaveni pasku
 	HF **ledStrips;
+	uint8_t numOfStrips=0;
 	NetworkCommunication *nc;
 public:
 	LedController(uint8_t numOfStrips);

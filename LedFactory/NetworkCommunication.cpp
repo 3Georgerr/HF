@@ -98,10 +98,12 @@ void NetworkCommunication::loop()
 						//Serial.print((char)c);
 						client.println(clientline);
 
-						/*
+
 
 						//char buf[BUFSIZ];
-						char *params[5][2];
+						
+						//char *params[5][2];
+						
 						// copy test[i] into the buffer
 						// because the parser overwrites what is i the string it is passed. And copy shifted to 5 letter - "GET /"
 						//strcpy nefunguje ok s posunem
@@ -112,6 +114,7 @@ void NetworkCommunication::loop()
 						//pokud bychom pouzili buffer
 						//int resultsCt = parseUrlParams(bud, params, 5, true);
 						resultsCt = parseUrlParams(&clientline[5], params, 5, true);
+
 
 						client.println("\" produced ");
 						client.println(resultsCt);
@@ -128,7 +131,7 @@ void NetworkCommunication::loop()
 							client.println("\".");
 							client.println();
 						}
-						*/
+						
 						// }
 						//          file.close();
 					}
@@ -161,6 +164,7 @@ uint8_t NetworkCommunication::getResults()
 {
 	return resultsCt;
 }
+
 
 NetworkCommunication::NetworkCommunication(uint8_t mac[6], IPAddress myIP)
 {

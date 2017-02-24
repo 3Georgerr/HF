@@ -59,7 +59,7 @@ void HF::blinkColor(uint8_t redFirst, uint8_t greenFirst, uint8_t blueFirst, uin
 
 void HF::blink() {
 	//Hlídá interval pro zmìnu stavu
-	if (lastBlink + blinkDelay<=millis()) {
+	if (millis() - lastBlink > blinkDelay) {
 		change = true;
 		lastBlink = millis();
 	}
@@ -79,7 +79,7 @@ void HF::blink() {
 void HF::blinkDuo()
 {
 	//Hlídá interval pro zmìnu stavu
-	if (lastBlink + blinkDelay <= millis()) {
+	if (millis() - lastBlink > blinkDelay ) {
 		change = true;
 		lastBlink = millis();
 	}
@@ -107,7 +107,7 @@ void HF::blinkDuo()
 }
 
 void HF::start() {
-	if (startTime + startDelay <= millis()) {
+	if (millis() - startTime > startDelay) {
 		change = true;
 	}
 

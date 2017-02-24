@@ -7,6 +7,7 @@
 LedController::LedController(uint8_t numOfStrips)
 {
 	ledStrips = new HF*[numOfStrips];
+	this->numOfStrips = numOfStrips;
 }
 
 HF * LedController::getStrip(uint8_t numOfStrip)
@@ -22,7 +23,9 @@ NetworkCommunication * LedController::getNetworkCommunication()
 void LedController::loop()
 {
 	nc->loop();
-
+	for (int i = 0; i < numOfStrips; i++) {
+		ledStrips[i]->loop();
+	}
 }
 
 void LedController::getParams()
