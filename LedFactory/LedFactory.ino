@@ -2,12 +2,15 @@
 //#pragma GCC optimize ("O0")
 
 
+
+#include <AT24CX.h>
 #include "HF.h"
 #include "NetworkCommunication.h"
 //#include <Adafruit_NeoPixel.h>
 #include <FastLED\FastLED.h>
 #include "LedController.h"
 //#include <Scheduler.h>
+#include <Configuration.h>
 
 //SD karta
 #include <SPI.h>
@@ -73,6 +76,9 @@ void setup() {
 		//Serial.flush();
 	#endif
 	
+		Configuration config;
+		config.initialize();
+
 	//Inicializace parametru z karty
 	if (!SD.begin(CSPINSDCARD)) {
 #ifdef DEBUG

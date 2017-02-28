@@ -1,11 +1,9 @@
-C:\Users\admin\AppData\Local\Temp\VMBuilds\LedFactory\arduino_due_x_dbg\Debug\LedFactory.cpp.o: \
- C:\Users\admin\AppData\Local\Temp\VMBuilds\LedFactory\arduino_due_x_dbg\Debug\LedFactory.cpp \
- C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/arduino.h \
- C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/avr/pgmspace.h \
- C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/avr/interrupt.h \
- C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/binary.h \
- C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/itoa.h \
- C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\system/libsam/chip.h \
+C:\Users\admin\AppData\Local\Temp\VMBuilds\LedFactory\arduino_due_x_dbg\Debug\EEPROM.cpp.o: \
+ C:\Users\admin\AppData\Local\Temp\VMBuilds\LedFactory\arduino_due_x_dbg\Debug\EEPROM.cpp \
+ C:\Users\admin\AppData\Local\Temp\VMBuilds\LedFactory\arduino_due_x_dbg\Debug\EEPROM.h \
+ C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\libraries\Wire\src/Wire.h \
+ C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\system/libsam/include/twi.h \
+ C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\system/libsam/include/../chip.h \
  C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\system/CMSIS/Device/ATMEL/sam.h \
  C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\system/CMSIS/Device/ATMEL/sam3.h \
  C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\system/CMSIS/Device/ATMEL/sam3xa/include/sam3xa.h \
@@ -81,49 +79,50 @@ C:\Users\admin\AppData\Local\Temp\VMBuilds\LedFactory\arduino_due_x_dbg\Debug\Le
  C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\system/CMSIS/Device/ATMEL/sam3xa/include/instance/instance_rtc.h \
  C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\system/CMSIS/Device/ATMEL/sam3xa/include/instance/instance_gpbr.h \
  C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\system/CMSIS/Device/ATMEL/sam3xa/include/pio/pio_sam3x8e.h \
- C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\system/libsam/include/adc.h \
- C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\system/libsam/include/../chip.h \
- C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\system/libsam/include/dacc.h \
- C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\system/libsam/include/interrupt_sam_nvic.h \
- C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\system/libsam/include/efc.h \
- C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\system/libsam/include/gpbr.h \
- C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\system/libsam/include/pio.h \
- C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\system/libsam/include/pmc.h \
- C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\system/libsam/include/pwmc.h \
- C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\system/libsam/include/rstc.h \
- C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\system/libsam/include/rtc.h \
- C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\system/libsam/include/rtt.h \
- C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\system/libsam/include/spi.h \
- C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\system/libsam/include/ssc.h \
- C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\system/libsam/include/tc.h \
- C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\system/libsam/include/twi.h \
- C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\system/libsam/include/usart.h \
- C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\system/libsam/include/wdt.h \
- C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\system/libsam/include/timetick.h \
- C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\system/libsam/include/USB_device.h \
- C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\system/libsam/include/USB_host.h \
- C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\system/libsam/include/can.h \
- C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\system/libsam/include/emac.h \
- C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\system/libsam/include/trng.h \
- C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\system/libsam/include/uotghs_device.h \
- C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\system/libsam/include/uotghs_host.h \
+ C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\system/libsam/include/../include/adc.h \
+ C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\system/libsam/include/../include/../chip.h \
+ C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\system/libsam/include/../include/dacc.h \
+ C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\system/libsam/include/../include/interrupt_sam_nvic.h \
+ C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\system/libsam/include/../include/efc.h \
+ C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\system/libsam/include/../include/gpbr.h \
+ C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\system/libsam/include/../include/pio.h \
+ C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\system/libsam/include/../include/pmc.h \
+ C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\system/libsam/include/../include/pwmc.h \
+ C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\system/libsam/include/../include/rstc.h \
+ C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\system/libsam/include/../include/rtc.h \
+ C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\system/libsam/include/../include/rtt.h \
+ C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\system/libsam/include/../include/spi.h \
+ C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\system/libsam/include/../include/ssc.h \
+ C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\system/libsam/include/../include/tc.h \
+ C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\system/libsam/include/../include/twi.h \
+ C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\system/libsam/include/../include/usart.h \
+ C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\system/libsam/include/../include/wdt.h \
+ C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\system/libsam/include/../include/timetick.h \
+ C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\system/libsam/include/../include/USB_device.h \
+ C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\system/libsam/include/../include/USB_host.h \
+ C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\system/libsam/include/../include/can.h \
+ C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\system/libsam/include/../include/emac.h \
+ C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\system/libsam/include/../include/trng.h \
+ C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\system/libsam/include/../include/uotghs_device.h \
+ C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\system/libsam/include/../include/uotghs_host.h \
+ C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/Stream.h \
+ C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/Print.h \
+ C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/WString.h \
+ C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/avr/pgmspace.h \
+ C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/Printable.h \
+ C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\variants\arduino_due_x/variant.h \
+ C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/Arduino.h \
+ C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/avr/interrupt.h \
+ C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/binary.h \
+ C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/itoa.h \
+ C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\system/libsam/chip.h \
  C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/wiring_constants.h \
  C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/WCharacter.h \
- C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/WString.h \
  C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/Tone.h \
  C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/WMath.h \
  C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/HardwareSerial.h \
  C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/Stream.h \
- C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/Print.h \
- C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/Printable.h \
  C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/wiring_pulse.h \
- C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\variants\arduino_due_x/variant.h \
- C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/Arduino.h \
- C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/UARTClass.h \
- C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/RingBuffer.h \
- C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/USARTClass.h \
- C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/UARTClass.h \
- C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/syscalls.h \
  C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/wiring.h \
  C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/wiring_digital.h \
  C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/wiring_analog.h \
@@ -135,65 +134,8 @@ C:\Users\admin\AppData\Local\Temp\VMBuilds\LedFactory\arduino_due_x_dbg\Debug\Le
  C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/USB/USBCore.h \
  C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/USB/USBAPI.h \
  C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/RingBuffer.h \
- C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/Stream.h \
- C:\Users\admin\Documents\Arduino\libraries\AT24Cx/AT24CX.h \
- C:\Users\admin\AppData\Local\Temp\VMBuilds\LedFactory\arduino_due_x_dbg\Debug\HF.h \
- C:\Users\admin\Documents\Arduino\libraries/FastLED\FastLED.h \
- C:\Users\admin\Documents\Arduino\libraries/FastLED\cpp_compat.h \
- C:\Users\admin\Documents\Arduino\libraries/FastLED\FastLED.h \
- C:\Users\admin\Documents\Arduino\libraries/FastLED\fastled_config.h \
- C:\Users\admin\Documents\Arduino\libraries/FastLED\led_sysdefs.h \
- C:\Users\admin\Documents\Arduino\libraries/FastLED\platforms/arm/sam/led_sysdefs_arm_sam.h \
- C:\Users\admin\Documents\Arduino\libraries/FastLED\bitswap.h \
- C:\Users\admin\Documents\Arduino\libraries/FastLED\controller.h \
- C:\Users\admin\Documents\Arduino\libraries/FastLED\pixeltypes.h \
- C:\Users\admin\Documents\Arduino\libraries/FastLED\lib8tion.h \
- C:\Users\admin\Documents\Arduino\libraries/FastLED\lib8tion/math8.h \
- C:\Users\admin\Documents\Arduino\libraries/FastLED\lib8tion/scale8.h \
- C:\Users\admin\Documents\Arduino\libraries/FastLED\lib8tion/random8.h \
- C:\Users\admin\Documents\Arduino\libraries/FastLED\lib8tion/trig8.h \
- C:\Users\admin\Documents\Arduino\libraries/FastLED\color.h \
- C:\Users\admin\Documents\Arduino\libraries/FastLED\fastpin.h \
- C:\Users\admin\Documents\Arduino\libraries/FastLED\fastspi_types.h \
- C:\Users\admin\Documents\Arduino\libraries/FastLED\./dmx.h \
- C:\Users\admin\Documents\Arduino\libraries/FastLED\./FastLED.h \
- C:\Users\admin\Documents\Arduino\libraries/FastLED\platforms.h \
- C:\Users\admin\Documents\Arduino\libraries/FastLED\platforms/arm/sam/fastled_arm_sam.h \
- C:\Users\admin\Documents\Arduino\libraries\FastLED/fastled_delay.h \
- C:\Users\admin\Documents\Arduino\libraries\FastLED/FastLED.h \
- C:\Users\admin\Documents\Arduino\libraries/FastLED\platforms/arm/sam/fastpin_arm_sam.h \
- C:\Users\admin\Documents\Arduino\libraries/FastLED\platforms/arm/sam/fastspi_arm_sam.h \
- C:\Users\admin\Documents\Arduino\libraries/FastLED\platforms/arm/sam/clockless_arm_sam.h \
- C:\Users\admin\Documents\Arduino\libraries/FastLED\platforms/arm/sam/clockless_block_arm_sam.h \
- C:\Users\admin\Documents\Arduino\libraries/FastLED\fastled_progmem.h \
- C:\Users\admin\Documents\Arduino\libraries/FastLED\hsv2rgb.h \
- C:\Users\admin\Documents\Arduino\libraries/FastLED\colorutils.h \
- C:\Users\admin\Documents\Arduino\libraries/FastLED\pixelset.h \
- C:\Users\admin\Documents\Arduino\libraries/FastLED\colorpalettes.h \
- C:\Users\admin\Documents\Arduino\libraries/FastLED\noise.h \
- C:\Users\admin\Documents\Arduino\libraries/FastLED\power_mgt.h \
- C:\Users\admin\Documents\Arduino\libraries/FastLED\fastspi.h \
- C:\Users\admin\Documents\Arduino\libraries/FastLED\fastspi_bitbang.h \
- C:\Users\admin\Documents\Arduino\libraries/FastLED\fastled_delay.h \
- C:\Users\admin\Documents\Arduino\libraries/FastLED\chipsets.h \
- C:\Users\admin\AppData\Local\Temp\VMBuilds\LedFactory\arduino_due_x_dbg\Debug\NetworkCommunication.h \
- C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\libraries\SPI\src/SPI.h \
- C:\Users\admin\Desktop\arduino-1.8.1\libraries\Ethernet\src/Ethernet.h \
- C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/IPAddress.h \
- C:\Users\admin\Desktop\arduino-1.8.1\libraries\Ethernet\src/EthernetClient.h \
- C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/Print.h \
- C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/Client.h \
- C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/IPAddress.h \
- C:\Users\admin\Desktop\arduino-1.8.1\libraries\Ethernet\src/EthernetServer.h \
- C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/Server.h \
- C:\Users\admin\Desktop\arduino-1.8.1\libraries\Ethernet\src/Dhcp.h \
- C:\Users\admin\Desktop\arduino-1.8.1\libraries\Ethernet\src/EthernetUdp.h \
- C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/Udp.h \
- C:\Users\admin\AppData\Local\Temp\VMBuilds\LedFactory\arduino_due_x_dbg\Debug\LedController.h \
- C:\Users\admin\Desktop\arduino-1.8.1\libraries\SD\src/SD.h \
- C:\Users\admin\Desktop\arduino-1.8.1\libraries\SD\src/utility/SdFat.h \
- C:\Users\admin\Desktop\arduino-1.8.1\libraries\SD\src/utility/Sd2Card.h \
- C:\Users\admin\Desktop\arduino-1.8.1\libraries\SD\src/utility/Sd2PinMap.h \
- C:\Users\admin\Desktop\arduino-1.8.1\libraries\SD\src/utility/SdInfo.h \
- C:\Users\admin\Desktop\arduino-1.8.1\libraries\SD\src/utility/FatStructs.h \
- C:\Users\admin\Desktop\arduino-1.8.1\libraries\SD\src/utility/SdFatUtil.h
+ C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/UARTClass.h \
+ C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/RingBuffer.h \
+ C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/USARTClass.h \
+ C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/UARTClass.h \
+ C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/syscalls.h

@@ -1,11 +1,12 @@
 #pragma once
-#ifndef _SDINITIALIZE_h
-#define _SDINITIALIZE_h
+#ifndef _CONFIGURATION_h
+#define _CONFIGURATION_h
 #include <SPI.h>
-#include <UIPEthernet.h>
+#include <Ethernet.h>
 #endif
 
-class SDInitialize
+
+class Configuration
 {
 private:
 	static IPAddress ip;
@@ -18,10 +19,9 @@ private:
 	static uint16_t numLedFifth;
 	static uint16_t numLedSixth;
 
-
 public:
 	static void initialize();
-	SDInitialize();
-	~SDInitialize();
+	Configuration();
+	~Configuration();
 };
 

@@ -4,7 +4,8 @@
 #define _NETWORKCOMMUNICATION_h
 
 #include <SPI.h>
-#include <UIPEthernet.h>
+#include <Ethernet.h>
+//#include <UIPEthernet.h>
 //#include "HF.h"
 
 #if defined(ARDUINO) && ARDUINO >= 100

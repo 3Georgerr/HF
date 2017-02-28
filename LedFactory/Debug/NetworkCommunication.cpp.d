@@ -137,28 +137,15 @@ C:\Users\admin\AppData\Local\Temp\VMBuilds\LedFactory\arduino_due_x_dbg\Debug\Ne
  C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/USARTClass.h \
  C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/UARTClass.h \
  C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/syscalls.h \
- C:\Users\admin\Documents\Arduino\libraries\UIPEthernet\src/UIPEthernet.h \
- C:\Users\admin\Documents\Arduino\libraries\UIPEthernet\src/ethernet_comp.h \
- C:\Users\admin\Documents\Arduino\libraries\UIPEthernet\src/Dhcp.h \
- C:\Users\admin\Documents\Arduino\libraries\UIPEthernet\src/UIPUdp.h \
- C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/Udp.h \
+ C:\Users\admin\Desktop\arduino-1.8.1\libraries\Ethernet\src/Ethernet.h \
  C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/IPAddress.h \
- C:\Users\admin\Documents\Arduino\libraries\UIPEthernet\src/utility/mempool.h \
- C:\Users\admin\Documents\Arduino\libraries\UIPEthernet\src/utility/mempool_conf.h \
- C:\Users\admin\Documents\Arduino\libraries\UIPEthernet\src/utility/uipethernet-conf.h \
- C:\Users\admin\Documents\Arduino\libraries\UIPEthernet\src/utility/uipopt.h \
- C:\Users\admin\Documents\Arduino\libraries\UIPEthernet\src/utility/uip-conf.h \
- C:\Users\admin\Documents\Arduino\libraries\UIPEthernet\src/utility/enc28j60.h \
- C:\Users\admin\Documents\Arduino\libraries\UIPEthernet\src/utility/uip.h \
- C:\Users\admin\Documents\Arduino\libraries\UIPEthernet\src/utility/Enc28J60Network.h \
- C:\Users\admin\Documents\Arduino\libraries\UIPEthernet\src/utility/mempool.h \
- C:\Users\admin\Documents\Arduino\libraries\UIPEthernet\src/UIPClient.h \
+ C:\Users\admin\Desktop\arduino-1.8.1\libraries\Ethernet\src/EthernetClient.h \
  C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/Print.h \
  C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/Client.h \
  C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/IPAddress.h \
- C:\Users\admin\Documents\Arduino\libraries\UIPEthernet\src/UIPServer.h \
+ C:\Users\admin\Desktop\arduino-1.8.1\libraries\Ethernet\src/EthernetServer.h \
  C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/Server.h \
- C:\Users\admin\Documents\Arduino\libraries\UIPEthernet\src/utility/uip_timer.h \
- C:\Users\admin\Documents\Arduino\libraries\UIPEthernet\src/utility/uip_clock.h \
- C:\Users\admin\Documents\Arduino\libraries\UIPEthernet\src/utility/clock-arch.h \
+ C:\Users\admin\Desktop\arduino-1.8.1\libraries\Ethernet\src/Dhcp.h \
+ C:\Users\admin\Desktop\arduino-1.8.1\libraries\Ethernet\src/EthernetUdp.h \
+ C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/Udp.h \
  C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/arduino.h

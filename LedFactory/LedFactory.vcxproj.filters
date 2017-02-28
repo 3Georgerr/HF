@@ -30,7 +30,7 @@
     <ClInclude Include="LedController.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SDInitialize.h">
+    <ClInclude Include="Configuration.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -44,7 +44,7 @@
     <ClCompile Include="LedController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SDInitialize.cpp">
+    <ClCompile Include="Configuration.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
