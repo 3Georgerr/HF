@@ -30,6 +30,9 @@
     <ClInclude Include="LedController.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SDInitialize.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="HF.cpp">
@@ -39,6 +42,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="LedController.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SDInitialize.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -9,9 +9,15 @@
 #include "LedController.h"
 //#include <Scheduler.h>
 
+//SD karta
+#include <SPI.h>
+#include <SD.h>
+
+#define DEBUG
+
 //Delka pasku
-#define NUMLEDFIRST 90
-#define NUMLEDSECOND 60
+#define NUMLEDFIRST 1024
+#define NUMLEDSECOND 1024
 #define NUMLEDTHIRD 1024
 #define NUMLEDFOURTH 1024
 #define NUMLEDFIFTH 1024
@@ -24,6 +30,10 @@
 #define PINSTRIPFOUR 3
 #define PINSTRIPFIVE 4
 #define PINSTRIPSIX 5
+
+//CS pin SD card
+#define CSPINSDCARD 50
+String a = "WS2812B";
 
 //Tridy Led pasku
 HF prvni = HF(NUMLEDFIRST, PINSTRIPONE);
@@ -46,33 +56,80 @@ uint32_t counter = 0;
 uint32_t interval = 100;
 uint32_t lastTime = 0;
 
+File sdConfiguration;
+
 void setup() {
 
 	counter = 0;
 	interval = 100;
 	lastTime = 0;
-	// put your setup code here, to run once:
-	
-	/*
-	HF prvni = HF(NUMLEDFIRST, PINSTRIPONE);
-	HF druhy = HF(NUMLEDSECOND, PINSTRIPTWO);
-	HF treti = HF(NUMLEDTHIRD, PINSTRIPTHREE);
-	HF ctvrty = HF(NUMLEDFOURTH, PINSTRIPFOUR);
-	HF paty = HF(NUMLEDFIFTH, PINSTRIPFIVE);
-	HF sesty = HF(NUMLEDSIXTH, PINSTRIPSIX);
-	*/
 
+	#ifdef DEBUG
+		Serial.begin(9600);
+		while (!Serial) {
+			; //wait for serial port to connect. Needed for native USB port only.
+		}
+		//Serial.print("test");
+		//Serial.flush();
+	#endif
+	
+	//Inicializace parametru z karty
+	if (!SD.begin(CSPINSDCARD)) {
+#ifdef DEBUG
+		Serial.println("initialization failed!");
+		Serial.flush();
+#endif
+		//	return;
+	}
+
+	
+	//CONFIG.TXT
+	sdConfiguration = SD.open("config.txt");
+	if (sdConfiguration) {
+		#ifdef DEBUG
+			Serial.println("config.txt:");
+			Serial.flush();
+		#endif
+		// read from the file until there's nothing else in it:
+		while (sdConfiguration.available()) {
+			#ifdef DEBUG
+			Serial.write(sdConfiguration.read());
+			Serial.flush();
+			#endif
+		}
+		// close the file:
+		sdConfiguration.close();
+	}
+	else {
+		#ifdef DEBUG
+		// if the file didn't open, print an error:
+		Serial.println("error opening config.txt");
+		Serial.flush();
+		#endif
+	}
+	
+	///*
+	prvni = HF(NUMLEDFIRST, PINSTRIPONE);
+	druhy = HF(NUMLEDSECOND, PINSTRIPTWO);
+	treti = HF(NUMLEDTHIRD, PINSTRIPTHREE);
+	ctvrty = HF(NUMLEDFOURTH, PINSTRIPFOUR);
+	paty = HF(NUMLEDFIFTH, PINSTRIPFIVE);
+	sesty = HF(NUMLEDSIXTH, PINSTRIPSIX);
+	//*/
+	
 	//Pridame pasky k vykresleni
-	FastLED.addLeds<NEOPIXEL, PINSTRIPONE>(prvni.getLedArray(), NUMLEDFIRST);
-	FastLED.addLeds<NEOPIXEL, PINSTRIPTWO>(druhy.getLedArray(), NUMLEDSECOND);
-	FastLED.addLeds<NEOPIXEL, PINSTRIPTHREE>(treti.getLedArray(), NUMLEDTHIRD);
-	FastLED.addLeds<NEOPIXEL, PINSTRIPFOUR>(ctvrty.getLedArray(), NUMLEDFOURTH);
-	FastLED.addLeds<NEOPIXEL, PINSTRIPFIVE>(paty.getLedArray(), NUMLEDFIFTH);
-	FastLED.addLeds<NEOPIXEL, PINSTRIPSIX>(sesty.getLedArray(), NUMLEDSIXTH);
+	FastLED.addLeds<WS2812B, PINSTRIPONE, GRB>(prvni.getLedArray(), NUMLEDFIRST);
+	FastLED.addLeds<WS2812B, PINSTRIPTWO, GRB>(druhy.getLedArray(), NUMLEDSECOND);
+	FastLED.addLeds<WS2812B, PINSTRIPTHREE, GRB>(treti.getLedArray(), NUMLEDTHIRD);
+	FastLED.addLeds<WS2812B, PINSTRIPFOUR, GRB>(ctvrty.getLedArray(), NUMLEDFOURTH);
+	FastLED.addLeds<WS2812B, PINSTRIPFIVE, GRB>(paty.getLedArray(), NUMLEDFIFTH);
+	FastLED.addLeds<WS2812B, PINSTRIPSIX, GRB>(sesty.getLedArray(), NUMLEDSIXTH);
+	
 	
 	ip = IPAddress(10, 0, 0, 34);
 	nc = NetworkCommunication(mac, ip);
 	
+
 	//predame odkaz na led pasky a network "driver"
 	lc.setStrip(&prvni, 0);
 	lc.setStrip(&druhy, 1);

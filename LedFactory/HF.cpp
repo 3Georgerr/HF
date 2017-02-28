@@ -1,6 +1,5 @@
 /*  HF - High Flow WS2811 LED Library
 Copyright (c) 2017 Jiri seda
-
 */
 
 #include "HF.h"
