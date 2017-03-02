@@ -1,32 +1,148 @@
 #include "Configuration.h"
 
-
-IPAddress Configuration::ip = IPAddress(192, 168, 10, 10);
-uint8_t Configuration::macAddress[6] = { 0x00,0x01,0x02,0x03,0x04,0x05 };
-
-uint16_t Configuration::numLedFirst = 1024;
-uint16_t Configuration::numLedSecond = 1024;
-uint16_t Configuration::numLedThird = 1024;
-uint16_t Configuration::numLedFourth = 1024;
-uint16_t Configuration::numLedFifth = 1024;
-uint16_t Configuration::numLedSixth = 1024;
-
-
-void Configuration::initialize()
+void Configuration::initialize(uint8_t eepromAddress)
 {
-	AT24C32 eeprom(7);
+	eeprom= AT24C32(eepromAddress);
+
+	//Inicializace karty
+	if (SD.begin(CSPINSDCARD)) {
+		sdAvailable = true;
+	}
+}
+
+void Configuration::setParameters(char ** array, uint8_t size,uint8_t NumOfparams=4)
+{
+		if (strcmp(array[0], "strip")) {
+			setStrip(array,NumOfparams);
+		}
+		else if (strcmp(array[0], "ip")) {
+			setIP(array[1]);
+		}
+		else if (strcmp(array[0], "mac")) {
+			setMac(array[1]);
+		}
+}
+
+void Configuration::setStrip(char** array,uint8_t NumOfparams) {
+	uint8_t strip;
+	uint16_t num;
+
+	strip = atoi(array[1])-1;
+	num = atoi(array[2]);
+	if (strip <= numOfStrips) {
+		numLed[strip] = num;
+	}
+}
+
+void Configuration::setIP(char* array) {
+	int values[6];
+	int i;
+	if (6 == sscanf(array, "%d.%d.%d.%d%c",
+		&values[0], &values[1], &values[2],
+		&values[3]))
+	{
+		/* convert to uint8_t */
+		for (i = 0; i < 4; ++i)
+			this->ip[i] = (uint8_t)values[i];
+	}
+}
+
+void Configuration::setMac(char* array) {
+	int values[6];
+	int i;
+
+	if (6 == sscanf(array, "%x:%x:%x:%x:%x:%x%c",
+		&values[0], &values[1], &values[2],
+		&values[3], &values[4], &values[5]))
+	{
+		/* convert to uint8_t */
+		for (i = 0; i < 6; ++i)
+			macAddress[i] = (uint8_t)values[i];
+	}
+
+	else
+	{
+		/* invalid mac */
+	}
+}
+
+
+bool Configuration::ReadFromSDCard(char * file="config.txt")
+{
+	sdConfiguration = SD.open(file);
+	if (sdConfiguration) {
+		// read from the file until there's nothing else in it:
+		while (sdConfiguration.available()) {
+			sdConfiguration.read();
+		}
+		// close the file:
+		sdConfiguration.close();
+		return true;
+	}
+	else{
+	}
+	//Can´t open file
+	return false;
+}
+
+
+IPAddress Configuration::getIP()
+{
+	return ip;
+}
+void Configuration::getMAC(uint8_t mac[])
+{
+	for (int i = 0; i < 6; i++) {
+		mac[i] = macAddress[i];
+	}
+
+}
+
+void Configuration::writeIPToEEPROM(uint16_t offset)
+{
+	eeprom.write(0 + offset,ip[0]);
+	eeprom.write(1 + offset, ip[1]);
+	eeprom.write(2 + offset, ip[2]);
+	eeprom.write(3 + offset, ip[3]);
+}
+void Configuration::writeMACToEEPROM(uint16_t offset)
+{
+		eeprom.write(0 + offset, &macAddress[0],6);
+}
+
+void Configuration::readIPFromEEPROM(uint16_t offset)
+{
 	byte IPAddress[4];
-	IPAddress[0] = eeprom.read(0);
-	IPAddress[1] = eeprom.read(1);
-	IPAddress[2] = eeprom.read(2);
-	IPAddress[3] = eeprom.read(3);
+	eeprom.read(0 + offset, IPAddress, 4);
 	ip = (IPAddress);
-	Serial.print("IP ulozena v EEPROM ");
-	Serial.print(IPAddress[0]);
+}
+void Configuration::readMACFromEEPROM(uint16_t offset)
+{
+	eeprom.read(0 + offset,macAddress,6);
 }
 
 Configuration::Configuration()
 {
+	int i;
+
+	macAddress[0] = 0x00;
+	macAddress[1] = 0x10;
+	macAddress[2] = 0x02;
+	macAddress[3] = 0x03;
+	macAddress[4] = 0x04;
+	macAddress[5] = 0x05;
+
+	ip = IPAddress(10, 0, 0, 34);
+
+	numOfStrips = NUMOFSTRIPS;
+	for (i = 0; i < numOfStrips; i++) {
+		numLed[i] = 1024;
+	}
+	
+
+
+	sdAvailable = false;
+	gotData = false;
 }
 
 

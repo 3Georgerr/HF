@@ -3,24 +3,55 @@
 #define _CONFIGURATION_h
 #include <SPI.h>
 #include <Ethernet.h>
+#include <AT24CX.h>
+#include <SD.h>
 #endif
 
+//CS pin SD card
+#define CSPINSDCARD 3
+#define NUMOFSTRIPS 6;
 
 class Configuration
 {
 private:
-	static IPAddress ip;
-	static uint8_t macAddress[6]; // = { 0x00,0x01,0x02,0x03,0x04,0x05 };
+	IPAddress ip;
+	uint8_t macAddress[6]; // = { 0x00,0x01,0x02,0x03,0x04,0x05 };
 
-	static uint16_t numLedFirst;
-	static uint16_t numLedSecond;
-	static uint16_t numLedThird;
-	static uint16_t numLedFourth;
-	static uint16_t numLedFifth;
-	static uint16_t numLedSixth;
+	uint16_t numLed[6];
+	uint8_t numOfStrips;
+
+	AT24C32 eeprom;
+	
+	File sdConfiguration;
+
+	boolean sdAvailable;
+	boolean gotData;
 
 public:
-	static void initialize();
+	void initialize(uint8_t eepromAddress=7);
+
+	void setParameters(char ** array, uint8_t size, uint8_t NumOfparams);
+	void setStrip(char ** array, uint8_t NumOfparams);
+
+	void setIP(char * array);
+
+
+	//Returns
+	IPAddress getIP();
+	void getMAC(uint8_t mac[]);
+
+	//EEPROM
+	void writeIPToEEPROM(uint16_t offset = 0);
+	void readIPFromEEPROM(uint16_t offset = 0);
+	
+	void writeMACToEEPROM(uint16_t offset = 4);
+	void readMACFromEEPROM(uint16_t offset = 0);
+	
+	void setMac(char * array);
+
+	//SD CARD
+	bool ReadFromSDCard(char *file);
+
 	Configuration();
 	~Configuration();
 };

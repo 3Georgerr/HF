@@ -31,7 +31,6 @@ void LedController::loop()
 void LedController::getParams()
 {
 	nc->getResults();
-
 }
 
 void LedController::setStrip(HF * strip, uint8_t numOfStrip)

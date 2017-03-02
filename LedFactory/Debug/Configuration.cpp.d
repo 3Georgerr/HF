@@ -1,6 +1,9 @@
-C:\Users\admin\AppData\Local\Temp\VMBuilds\LedFactory\arduino_due_x_dbg\Debug\LedFactory.cpp.o: \
- C:\Users\admin\AppData\Local\Temp\VMBuilds\LedFactory\arduino_due_x_dbg\Debug\LedFactory.cpp \
- C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/arduino.h \
+C:\Users\admin\AppData\Local\Temp\VMBuilds\LedFactory\arduino_due_x_dbg\Debug\Configuration.cpp.o: \
+ C:\Users\admin\AppData\Local\Temp\VMBuilds\LedFactory\arduino_due_x_dbg\Debug\Configuration.cpp \
+ C:\Users\admin\AppData\Local\Temp\VMBuilds\LedFactory\arduino_due_x_dbg\Debug\Configuration.h \
+ C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\libraries\SPI\src/SPI.h \
+ C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\variants\arduino_due_x/variant.h \
+ C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/Arduino.h \
  C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/avr/pgmspace.h \
  C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/avr/interrupt.h \
  C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/binary.h \
@@ -117,13 +120,6 @@ C:\Users\admin\AppData\Local\Temp\VMBuilds\LedFactory\arduino_due_x_dbg\Debug\Le
  C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/Print.h \
  C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/Printable.h \
  C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/wiring_pulse.h \
- C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\variants\arduino_due_x/variant.h \
- C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/Arduino.h \
- C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/UARTClass.h \
- C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/RingBuffer.h \
- C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/USARTClass.h \
- C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/UARTClass.h \
- C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/syscalls.h \
  C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/wiring.h \
  C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/wiring_digital.h \
  C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/wiring_analog.h \
@@ -136,48 +132,11 @@ C:\Users\admin\AppData\Local\Temp\VMBuilds\LedFactory\arduino_due_x_dbg\Debug\Le
  C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/USB/USBAPI.h \
  C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/RingBuffer.h \
  C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/Stream.h \
- C:\Users\admin\Documents\Arduino\libraries\AT24Cx/AT24CX.h \
- C:\Users\admin\AppData\Local\Temp\VMBuilds\LedFactory\arduino_due_x_dbg\Debug\HF.h \
- C:\Users\admin\Documents\Arduino\libraries/FastLED\FastLED.h \
- C:\Users\admin\Documents\Arduino\libraries/FastLED\cpp_compat.h \
- C:\Users\admin\Documents\Arduino\libraries/FastLED\FastLED.h \
- C:\Users\admin\Documents\Arduino\libraries/FastLED\fastled_config.h \
- C:\Users\admin\Documents\Arduino\libraries/FastLED\led_sysdefs.h \
- C:\Users\admin\Documents\Arduino\libraries/FastLED\platforms/arm/sam/led_sysdefs_arm_sam.h \
- C:\Users\admin\Documents\Arduino\libraries/FastLED\bitswap.h \
- C:\Users\admin\Documents\Arduino\libraries/FastLED\controller.h \
- C:\Users\admin\Documents\Arduino\libraries/FastLED\pixeltypes.h \
- C:\Users\admin\Documents\Arduino\libraries/FastLED\lib8tion.h \
- C:\Users\admin\Documents\Arduino\libraries/FastLED\lib8tion/math8.h \
- C:\Users\admin\Documents\Arduino\libraries/FastLED\lib8tion/scale8.h \
- C:\Users\admin\Documents\Arduino\libraries/FastLED\lib8tion/random8.h \
- C:\Users\admin\Documents\Arduino\libraries/FastLED\lib8tion/trig8.h \
- C:\Users\admin\Documents\Arduino\libraries/FastLED\color.h \
- C:\Users\admin\Documents\Arduino\libraries/FastLED\fastpin.h \
- C:\Users\admin\Documents\Arduino\libraries/FastLED\fastspi_types.h \
- C:\Users\admin\Documents\Arduino\libraries/FastLED\./dmx.h \
- C:\Users\admin\Documents\Arduino\libraries/FastLED\./FastLED.h \
- C:\Users\admin\Documents\Arduino\libraries/FastLED\platforms.h \
- C:\Users\admin\Documents\Arduino\libraries/FastLED\platforms/arm/sam/fastled_arm_sam.h \
- C:\Users\admin\Documents\Arduino\libraries\FastLED/fastled_delay.h \
- C:\Users\admin\Documents\Arduino\libraries\FastLED/FastLED.h \
- C:\Users\admin\Documents\Arduino\libraries/FastLED\platforms/arm/sam/fastpin_arm_sam.h \
- C:\Users\admin\Documents\Arduino\libraries/FastLED\platforms/arm/sam/fastspi_arm_sam.h \
- C:\Users\admin\Documents\Arduino\libraries/FastLED\platforms/arm/sam/clockless_arm_sam.h \
- C:\Users\admin\Documents\Arduino\libraries/FastLED\platforms/arm/sam/clockless_block_arm_sam.h \
- C:\Users\admin\Documents\Arduino\libraries/FastLED\fastled_progmem.h \
- C:\Users\admin\Documents\Arduino\libraries/FastLED\hsv2rgb.h \
- C:\Users\admin\Documents\Arduino\libraries/FastLED\colorutils.h \
- C:\Users\admin\Documents\Arduino\libraries/FastLED\pixelset.h \
- C:\Users\admin\Documents\Arduino\libraries/FastLED\colorpalettes.h \
- C:\Users\admin\Documents\Arduino\libraries/FastLED\noise.h \
- C:\Users\admin\Documents\Arduino\libraries/FastLED\power_mgt.h \
- C:\Users\admin\Documents\Arduino\libraries/FastLED\fastspi.h \
- C:\Users\admin\Documents\Arduino\libraries/FastLED\fastspi_bitbang.h \
- C:\Users\admin\Documents\Arduino\libraries/FastLED\fastled_delay.h \
- C:\Users\admin\Documents\Arduino\libraries/FastLED\chipsets.h \
- C:\Users\admin\AppData\Local\Temp\VMBuilds\LedFactory\arduino_due_x_dbg\Debug\NetworkCommunication.h \
- C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\libraries\SPI\src/SPI.h \
+ C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/UARTClass.h \
+ C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/RingBuffer.h \
+ C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/USARTClass.h \
+ C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/UARTClass.h \
+ C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/syscalls.h \
  C:\Users\admin\Desktop\arduino-1.8.1\libraries\Ethernet\src/Ethernet.h \
  C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/IPAddress.h \
  C:\Users\admin\Desktop\arduino-1.8.1\libraries\Ethernet\src/EthernetClient.h \
@@ -189,8 +148,7 @@ C:\Users\admin\AppData\Local\Temp\VMBuilds\LedFactory\arduino_due_x_dbg\Debug\Le
  C:\Users\admin\Desktop\arduino-1.8.1\libraries\Ethernet\src/Dhcp.h \
  C:\Users\admin\Desktop\arduino-1.8.1\libraries\Ethernet\src/EthernetUdp.h \
  C:\Users\admin\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.11\cores\arduino/Udp.h \
- C:\Users\admin\AppData\Local\Temp\VMBuilds\LedFactory\arduino_due_x_dbg\Debug\LedController.h \
- C:\Users\admin\AppData\Local\Temp\VMBuilds\LedFactory\arduino_due_x_dbg\Debug\Configuration.h \
+ C:\Users\admin\Documents\Arduino\libraries\AT24Cx/AT24CX.h \
  C:\Users\admin\Desktop\arduino-1.8.1\libraries\SD\src/SD.h \
  C:\Users\admin\Desktop\arduino-1.8.1\libraries\SD\src/utility/SdFat.h \
  C:\Users\admin\Desktop\arduino-1.8.1\libraries\SD\src/utility/Sd2Card.h \

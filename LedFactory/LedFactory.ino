@@ -10,7 +10,7 @@
 #include <FastLED\FastLED.h>
 #include "LedController.h"
 //#include <Scheduler.h>
-#include <Configuration.h>
+#include "Configuration.h"
 
 //SD karta
 #include <SPI.h>
@@ -30,13 +30,12 @@
 #define PINSTRIPONE 1
 #define PINSTRIPTWO 6
 #define PINSTRIPTHREE 2
-#define PINSTRIPFOUR 3
-#define PINSTRIPFIVE 4
-#define PINSTRIPSIX 5
+#define PINSTRIPFOUR 4
+#define PINSTRIPFIVE 5
+#define PINSTRIPSIX 7
 
-//CS pin SD card
-#define CSPINSDCARD 50
-String a = "WS2812B";
+
+//String a = "WS2812B";
 
 //Tridy Led pasku
 HF prvni = HF(NUMLEDFIRST, PINSTRIPONE);
@@ -59,7 +58,7 @@ uint32_t counter = 0;
 uint32_t interval = 100;
 uint32_t lastTime = 0;
 
-File sdConfiguration;
+
 
 void setup() {
 
@@ -67,53 +66,28 @@ void setup() {
 	interval = 100;
 	lastTime = 0;
 
-	#ifdef DEBUG
-		Serial.begin(9600);
-		while (!Serial) {
-			; //wait for serial port to connect. Needed for native USB port only.
-		}
-		//Serial.print("test");
-		//Serial.flush();
-	#endif
-	
-		Configuration config;
-		config.initialize();
-
-	//Inicializace parametru z karty
-	if (!SD.begin(CSPINSDCARD)) {
 #ifdef DEBUG
-		Serial.println("initialization failed!");
-		Serial.flush();
+	Serial.begin(9600);
+	while (!Serial) {
+		; //wait for serial port to connect. Needed for native USB port only.
+	}
+	//Serial.print("test");
+	//Serial.flush();
 #endif
-		//	return;
-	}
 
-	
-	//CONFIG.TXT
-	sdConfiguration = SD.open("config.txt");
-	if (sdConfiguration) {
-		#ifdef DEBUG
-			Serial.println("config.txt:");
-			Serial.flush();
-		#endif
-		// read from the file until there's nothing else in it:
-		while (sdConfiguration.available()) {
-			#ifdef DEBUG
-			Serial.write(sdConfiguration.read());
-			Serial.flush();
-			#endif
-		}
-		// close the file:
-		sdConfiguration.close();
-	}
-	else {
-		#ifdef DEBUG
-		// if the file didn't open, print an error:
-		Serial.println("error opening config.txt");
-		Serial.flush();
-		#endif
-	}
-	
+	Configuration config;
+	config.initialize();
+	bool dataZSD = config.ReadFromSDCard("config.txt");
+
+	Serial.print("Soubor na SD dostupny:");
+	Serial.println(dataZSD);
+	Serial.println(" ");
+	Serial.flush();
+	//config.setIP();
+
+
+
+
 	///*
 	prvni = HF(NUMLEDFIRST, PINSTRIPONE);
 	druhy = HF(NUMLEDSECOND, PINSTRIPTWO);
@@ -122,7 +96,7 @@ void setup() {
 	paty = HF(NUMLEDFIFTH, PINSTRIPFIVE);
 	sesty = HF(NUMLEDSIXTH, PINSTRIPSIX);
 	//*/
-	
+
 	//Pridame pasky k vykresleni
 	FastLED.addLeds<WS2812B, PINSTRIPONE, GRB>(prvni.getLedArray(), NUMLEDFIRST);
 	FastLED.addLeds<WS2812B, PINSTRIPTWO, GRB>(druhy.getLedArray(), NUMLEDSECOND);
@@ -130,9 +104,18 @@ void setup() {
 	FastLED.addLeds<WS2812B, PINSTRIPFOUR, GRB>(ctvrty.getLedArray(), NUMLEDFOURTH);
 	FastLED.addLeds<WS2812B, PINSTRIPFIVE, GRB>(paty.getLedArray(), NUMLEDFIFTH);
 	FastLED.addLeds<WS2812B, PINSTRIPSIX, GRB>(sesty.getLedArray(), NUMLEDSIXTH);
-	
-	
+
+
 	ip = IPAddress(10, 0, 0, 34);
+
+	//Funguje
+	config.readIPFromEEPROM();
+	ip = config.getIP();
+
+	//config.setMAC();
+	//config.readMAC();
+	config.getMAC(mac);
+	delay(100);
 	nc = NetworkCommunication(mac, ip);
 	
 
@@ -150,6 +133,7 @@ void setup() {
 	//lc.getStrip(0)->blinkCRGB(0, 0, 1, 0, 1, 0);
 	//lc.getStrip(1)->blinkColor(1, 0, 0, 0, 0, 1);
 	lc.getStrip(0)->setMode(4);
+	
 	nc.start();
 
 	//Scheduler.startLoop(loop2);
@@ -166,7 +150,9 @@ void loop() {
 
 	//Testovani
 	if (millis()>10000 == 1 && counter == 0) {
-		lc.getStrip(0)->setMode(4);
+		lc.getStrip(0)->setMode(0);
+		lc.getStrip(1)->setMode(0);
+		lc.getStrip(2)->setMode(0);
 	}
 
 	/*
