@@ -149,11 +149,12 @@ void loop() {
 	lc.loop();
 
 	//Testovani
-	if (millis()>10000 == 1 && counter == 0) {
+	/*if (millis()>10000 == 1 && counter == 0) {
 		lc.getStrip(0)->setMode(0);
 		lc.getStrip(1)->setMode(0);
 		lc.getStrip(2)->setMode(0);
 	}
+	*/
 
 	/*
 	//nyni probiha v hlavni smycce ledControlleru

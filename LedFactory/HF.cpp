@@ -24,7 +24,7 @@ HF::HF(uint16_t n,uint8_t p = 6)
 	//parametry blikani
 	lightOn = true;
 	change = true;
-	blinkColorOne = CRGB(255, 0, 0);
+	blinkColorOne = CRGB(1, 0, 0);
 	blinkColorTwo = CRGB(0,0,0);
 	blinkDelay = 500;
 	

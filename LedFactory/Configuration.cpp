@@ -69,12 +69,52 @@ void Configuration::setMac(char* array) {
 
 bool Configuration::ReadFromSDCard(char * file="config.txt")
 {
+	int i,p;
+	char * line;
+	char * temp;
+	char chars_array[4][31];
+
+	line = new char[31];
+
 	sdConfiguration = SD.open(file);
 	if (sdConfiguration) {
 		// read from the file until there's nothing else in it:
+		i = 0;
 		while (sdConfiguration.available()) {
-			sdConfiguration.read();
+			i = sdConfiguration.readBytesUntil('\n', line, 30);
+			line[i - 1] = '\0';
+			p = 0;
+			Serial.println(line);
+			chars_array[0][0] = '\0';
+			chars_array[1][0] = '\0';
+			chars_array[2][0] = '\0';
+			chars_array[3][0] = '\0';
+			temp = strtok(line, "=");
+
+			while (temp) {
+				strncpy(chars_array[p], temp, 30);
+				chars_array[p++][31] = '\0';
+				Serial.println(temp);
+				temp = strtok(NULL, "=");
+			}
+
+			Serial.print("O ");
+			Serial.println(chars_array[0]);
+			Serial.print("1 ");
+			Serial.println(chars_array[1]);
+			Serial.print("2 ");
+			Serial.println(chars_array[2]);
+			Serial.print("3 ");
+			Serial.println(chars_array[3]);
+			Serial.flush();
+
+			chars_array[0][0] = '\0';
+			chars_array[1][0] = '\0';
+			chars_array[2][0] = '\0';
+			chars_array[3][0] = '\0';
+
 		}
+		delete line;
 		// close the file:
 		sdConfiguration.close();
 		return true;
