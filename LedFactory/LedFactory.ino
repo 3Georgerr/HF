@@ -38,18 +38,20 @@
 //String a = "WS2812B";
 
 //Tridy Led pasku
-HF prvni = HF(NUMLEDFIRST, PINSTRIPONE);
-HF druhy = HF(NUMLEDSECOND, PINSTRIPTWO);
-HF treti = HF(NUMLEDTHIRD, PINSTRIPTHREE);
-HF ctvrty = HF(NUMLEDFOURTH, PINSTRIPFOUR);
-HF paty = HF(NUMLEDFIFTH, PINSTRIPFIVE);
-HF sesty = HF(NUMLEDSIXTH, PINSTRIPSIX);
-
+HF prvni = HF(0, PINSTRIPONE);
+HF druhy = HF(0, PINSTRIPTWO);
+HF treti = HF(0, PINSTRIPTHREE);
+HF ctvrty = HF(0, PINSTRIPFOUR);
+HF paty = HF(0, PINSTRIPFIVE);
+HF sesty = HF(0, PINSTRIPSIX);
 
 //nastaveni sitovych parametru (mac,ip)
 uint8_t mac[6] = { 0x00,0x01,0x02,0x03,0x04,0x05 };
 IPAddress ip = IPAddress(10, 0, 0, 34);
-NetworkCommunication nc = NetworkCommunication(mac, ip);
+IPAddress mySubnet = IPAddress(255,255,255,0);
+IPAddress  myGateway = IPAddress(10, 0, 0, 138);
+IPAddress myDNS = IPAddress(8,8,8,8);
+NetworkCommunication nc = NetworkCommunication(mac, ip,myDNS,myGateway,mySubnet);
 //Led controller ovlada pasky pomoci dat ze site
 LedController lc = LedController(6);
 
@@ -66,6 +68,20 @@ void setup() {
 	interval = 100;
 	lastTime = 0;
 
+	pinMode(PINSTRIPONE, OUTPUT);
+	pinMode(PINSTRIPTWO, OUTPUT);
+	pinMode(PINSTRIPTHREE, OUTPUT);
+	pinMode(PINSTRIPFOUR, OUTPUT);
+	pinMode(PINSTRIPFIVE, OUTPUT);
+	pinMode(PINSTRIPSIX, OUTPUT);
+
+	digitalWrite(PINSTRIPONE, LOW);
+	digitalWrite(PINSTRIPTWO, LOW);
+	digitalWrite(PINSTRIPTHREE, LOW);
+	digitalWrite(PINSTRIPFOUR, LOW);
+	digitalWrite(PINSTRIPFIVE, LOW);
+	digitalWrite(PINSTRIPSIX, LOW);
+
 #ifdef DEBUG
 	Serial.begin(9600);
 	while (!Serial) {
@@ -77,33 +93,44 @@ void setup() {
 
 	Configuration config;
 	config.initialize();
+
+	for (int i = 1; i < 7; i++) {
+		config.readNumOfLedsFromEEPROM(i);
+	}
+
 	bool dataZSD = config.ReadFromSDCard("config.txt");
 
+#ifdef DEBUG
 	Serial.print("Soubor na SD dostupny:");
 	Serial.println(dataZSD);
 	Serial.println(" ");
 	Serial.flush();
-	//config.setIP();
+#endif // DEBUG
 
-
-
+#ifdef DEBUG
+	for (int i = 0; i < 6; i++) {
+		Serial.println(config.getNumOfLed(i));
+	}
+	Serial.println(" ");
+	Serial.flush();
+#endif // DEBUG
 
 	///*
-	prvni = HF(NUMLEDFIRST, PINSTRIPONE);
-	druhy = HF(NUMLEDSECOND, PINSTRIPTWO);
-	treti = HF(NUMLEDTHIRD, PINSTRIPTHREE);
-	ctvrty = HF(NUMLEDFOURTH, PINSTRIPFOUR);
-	paty = HF(NUMLEDFIFTH, PINSTRIPFIVE);
-	sesty = HF(NUMLEDSIXTH, PINSTRIPSIX);
+	prvni = HF(config.getNumOfLed(0), PINSTRIPONE);
+	druhy = HF(config.getNumOfLed(1), PINSTRIPTWO);
+	treti = HF(config.getNumOfLed(2), PINSTRIPTHREE);
+	ctvrty = HF(config.getNumOfLed(3), PINSTRIPFOUR);
+	paty = HF(config.getNumOfLed(4), PINSTRIPFIVE);
+	sesty = HF(config.getNumOfLed(5), PINSTRIPSIX);
 	//*/
 
 	//Pridame pasky k vykresleni
-	FastLED.addLeds<WS2812B, PINSTRIPONE, GRB>(prvni.getLedArray(), NUMLEDFIRST);
-	FastLED.addLeds<WS2812B, PINSTRIPTWO, GRB>(druhy.getLedArray(), NUMLEDSECOND);
-	FastLED.addLeds<WS2812B, PINSTRIPTHREE, GRB>(treti.getLedArray(), NUMLEDTHIRD);
-	FastLED.addLeds<WS2812B, PINSTRIPFOUR, GRB>(ctvrty.getLedArray(), NUMLEDFOURTH);
-	FastLED.addLeds<WS2812B, PINSTRIPFIVE, GRB>(paty.getLedArray(), NUMLEDFIFTH);
-	FastLED.addLeds<WS2812B, PINSTRIPSIX, GRB>(sesty.getLedArray(), NUMLEDSIXTH);
+	FastLED.addLeds<WS2812B, PINSTRIPONE, GRB>(prvni.getLedArray(), config.getNumOfLed(0));
+	FastLED.addLeds<WS2812B, PINSTRIPTWO, GRB>(druhy.getLedArray(), config.getNumOfLed(1));
+	FastLED.addLeds<WS2812B, PINSTRIPTHREE, GRB>(treti.getLedArray(), config.getNumOfLed(2));
+	FastLED.addLeds<WS2812B, PINSTRIPFOUR, GRB>(ctvrty.getLedArray(), config.getNumOfLed(3));
+	FastLED.addLeds<WS2812B, PINSTRIPFIVE, GRB>(paty.getLedArray(), config.getNumOfLed(4));
+	FastLED.addLeds<WS2812B, PINSTRIPSIX, GRB>(sesty.getLedArray(), config.getNumOfLed(5));
 
 
 	ip = IPAddress(10, 0, 0, 34);
@@ -111,12 +138,15 @@ void setup() {
 	//Funguje
 	config.readIPFromEEPROM();
 	ip = config.getIP();
+	myDNS = config.getDNS();
+	myGateway = config.getGateway();
+	mySubnet = config.getSubnet();
 
 	//config.setMAC();
 	//config.readMAC();
 	config.getMAC(mac);
 	delay(100);
-	nc = NetworkCommunication(mac, ip);
+	nc = NetworkCommunication(mac, ip,myDNS,myGateway,mySubnet);
 	
 
 	//predame odkaz na led pasky a network "driver"

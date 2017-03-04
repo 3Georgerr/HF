@@ -156,7 +156,7 @@ void NetworkCommunication::start()
 {
 	//uint8_t macv[6] = { 0x00,0x01,0x02,0x03,0x04,0x05 };
 	//Ethernet.begin(macv, IPAddress(10, 0, 0, 34), IPAddress(8, 8, 8, 8), IPAddress(10, 0, 0, 138));
-	Ethernet.begin(this->mac, this->myIP);
+	Ethernet.begin(this->mac, this->myIP,this->myDNS,this->myGateway,this->mySubnet);
 	server.begin();
 }
 
@@ -166,12 +166,16 @@ uint8_t NetworkCommunication::getResults()
 }
 
 
-NetworkCommunication::NetworkCommunication(uint8_t mac[6], IPAddress myIP)
+NetworkCommunication::NetworkCommunication(uint8_t mac[6], IPAddress myIP, IPAddress myDNS, IPAddress myGateway, IPAddress mySubnet)
 {
 	this->myIP = myIP;
+	this->myDNS = myDNS;
+	this->myGateway = myGateway;
+	this->mySubnet = mySubnet;
 	for (int i = 0; i < 6; i++) {
 		this->mac[i] = mac[i];
 	}
+
 	index = 0;
 	resultsCt = 0;	
 }

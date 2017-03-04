@@ -24,7 +24,7 @@ HF::HF(uint16_t n,uint8_t p = 6)
 	//parametry blikani
 	lightOn = true;
 	change = true;
-	blinkColorOne = CRGB(1, 0, 0);
+	blinkColorOne = CRGB(10, 0, 0);
 	blinkColorTwo = CRGB(0,0,0);
 	blinkDelay = 500;
 	
@@ -42,6 +42,11 @@ HF::HF(uint16_t n,uint8_t p = 6)
 	startPhase = 0;
 
 	confColor = CRGB(255,0,0);
+}
+
+HF::~HF()
+{
+	delete leds;
 }
 
 CRGB HF::Color(uint8_t red, uint8_t green, uint8_t blue) {

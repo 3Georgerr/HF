@@ -19,7 +19,10 @@
 class NetworkCommunication {
 private:
 	EthernetServer server = EthernetServer(80);
-	IPAddress myIP = myIP;
+	IPAddress myIP;
+	IPAddress myDNS;
+	IPAddress myGateway;
+	IPAddress mySubnet;
 	uint8_t mac[6];
 	char clientline[BUFSIZ];
 	int index;
@@ -30,7 +33,7 @@ private:
 
 public:
 	//mac { 0x00,0x01,0x02,0x03,0x04,0x05 }
-	NetworkCommunication(uint8_t mac[6], IPAddress myIP);
+	NetworkCommunication(uint8_t mac[6], IPAddress myIP,IPAddress myDNS,IPAddress myGateway,IPAddress mySubnet);
 	void percentDecode(char *src);
 	int parseUrlParams(char *queryString, char *results[][2], int resultsMaxCt, boolean decodeUrl);
 	void loop();

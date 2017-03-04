@@ -56,7 +56,7 @@ private:
 
 public:
 	HF(uint16_t n, uint8_t p);
-
+	~HF();
 	CRGB Color(uint8_t red, uint8_t green, uint8_t blue);
 
 	void blinkColor(uint8_t redFirst, uint8_t greenFirst, uint8_t blueFirst);
