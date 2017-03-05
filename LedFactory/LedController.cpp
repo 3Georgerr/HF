@@ -23,6 +23,7 @@ NetworkCommunication * LedController::getNetworkCommunication()
 void LedController::loop()
 {
 	nc->loop();
+	
 	for (int i = 0; i < numOfStrips; i++) {
 		ledStrips[i]->loop();
 	}

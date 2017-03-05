@@ -53,9 +53,10 @@ public:
 
 	//EEPROM
 	void writeIPToEEPROM(uint16_t offset = 0);
-	void readIPFromEEPROM(uint16_t offset = 0);
+	void writeIPToEEPROM(uint16_t offset, IPAddress &ipToWrite);
 	
 	void writeMACToEEPROM(uint16_t offset = 16);
+	void readIPFromEEPROM(uint16_t offset, IPAddress * target);
 	void readMACFromEEPROM(uint16_t offset = 16);
 
 	void writeNumOfLedsToEEPROM(uint8_t strip, uint16_t offset=22);

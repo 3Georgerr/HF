@@ -27,6 +27,7 @@ private:
 	//mode 1 = blinking
 	//mode 2 = starting
 	//mode 3 = light
+	//mode 4 = blinkung duo
 	uint8_t mode;
 	
 	//Omezujeme prepis modu

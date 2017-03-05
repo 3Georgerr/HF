@@ -2,37 +2,50 @@
 
 void Configuration::initialize(uint8_t eepromAddress)
 {
-	eeprom= AT24C32(eepromAddress);
+	eeprom = AT24C32(eepromAddress);
 
 	//Inicializace karty
 	if (SD.begin(CSPINSDCARD)) {
 		sdAvailable = true;
 	}
+
+	for (int i = 1; i < 7; i++) {
+		readNumOfLedsFromEEPROM(i);
+	}
+
+	
+	readIPFromEEPROM(0,&ip);
+	readIPFromEEPROM(4,&subnet);
+	readIPFromEEPROM(8, &gateway);
+	readIPFromEEPROM(12, &dns);
+	readMACFromEEPROM();
+	
 }
 
-void Configuration::setParameters(char array[4][31],uint8_t NumOfparams=4)
-{
-	if (strcmp(array[0], "strip")) {
+void Configuration::setParameters(char array[4][31], uint8_t NumOfparams = 4)
+{ 
+	if (strcmp(array[0], "strip")==0) {
 		setStrip(array + 1, NumOfparams);
 		writeNumOfLedsToEEPROM(atoi(array[1]));
 		}
-		else if (strcmp(array[0], "ip")) {
+		else if (strcmp(array[0], "ip") == 0) {
 			setIP(array[1]);
 			writeIPToEEPROM();
 		}
-		else if (strcmp(array[0], "subnet")) {
+		else if (strcmp(array[0], "netmask") == 0) {
 			setSubnet(array[1]);
-			writeIPToEEPROM(4);
+
+			writeIPToEEPROM(4,subnet);
 		}
-		else if (strcmp(array[0], "gateway")) {
+		else if (strcmp(array[0], "gateway") == 0) {
 			setGateway(array[1]);
-			writeIPToEEPROM(8);
+			writeIPToEEPROM(8,gateway);
 		}
-		else if (strcmp(array[0], "dns")) {
+		else if (strcmp(array[0], "dns") == 0) {
 			setDNS(array[1]);
-			writeIPToEEPROM(12);
+			writeIPToEEPROM(12,dns);
 		}
-		else if (strcmp(array[0], "mac")) {
+		else if (strcmp(array[0], "mac") == 0) {
 			setMac(array[1]);
 			writeMACToEEPROM();
 		}
@@ -43,10 +56,12 @@ void Configuration::setStrip(char array[3][31], uint8_t NumOfparams) {
 	uint8_t strip;
 	uint16_t num;
 
+	/*
 	Serial.println("hodnoty");
 	Serial.println(array[0]);
 	Serial.println(array[1]);
 	Serial.println(array[2]);
+	*/
 
 	strip = atoi(array[0])-1;
 	num = atoi(array[1]);
@@ -56,69 +71,68 @@ void Configuration::setStrip(char array[3][31], uint8_t NumOfparams) {
 }
 
 void Configuration::setIP(char* array) {
-	int values[6];
+	int values[4];
 	int i;
-	if (6 == sscanf(array, "%d.%d.%d.%d%c",
+	if (5 == sscanf(array, "%d.%d.%d.%d%c",
 		&values[0], &values[1], &values[2],
 		&values[3]))
 	{
 		/* convert to uint8_t */
-		for (i = 0; i < 4; ++i)
+		for (i = 0; i < 4; ++i) {
 			this->ip[i] = (uint8_t)values[i];
+		}
 	}
 }
 void Configuration::setSubnet(char* array) {
-	int values[6];
+	int values[4];
 	int i;
-	if (6 == sscanf(array, "%d.%d.%d.%d%c",
+	if (5 == sscanf(array, "%d.%d.%d.%d%c",
 		&values[0], &values[1], &values[2],
 		&values[3]))
 	{
-		/* convert to uint8_t */
-		for (i = 0; i < 4; ++i)
-			this->subnet[i] = (uint8_t)values[i];
+		for (i = 0; i < 4; i++) {
+			this->subnet[i] = values[i];
+		}
 	}
+
+	
 }
 void Configuration::setGateway(char* array) {
-	int values[6];
+	int values[4];
 	int i;
-	if (6 == sscanf(array, "%d.%d.%d.%d%c",
+	if (5 == sscanf(array, "%d.%d.%d.%d%c",
 		&values[0], &values[1], &values[2],
 		&values[3]))
 	{
-		/* convert to uint8_t */
-		for (i = 0; i < 4; ++i)
-			this->gateway[i] = (uint8_t)values[i];
+		for (i = 0; i < 4; i++) {
+			this->gateway[i] = values[i];
+		}
 	}
+	
 }
 void Configuration::setDNS(char* array) {
-	int values[6];
+	int values[4];
 	int i;
-	if (6 == sscanf(array, "%d.%d.%d.%d%c",
+	if (5 == sscanf(array, "%d.%d.%d.%d%c",
 		&values[0], &values[1], &values[2],
 		&values[3]))
 	{
-		/* convert to uint8_t */
-		for (i = 0; i < 4; ++i)
+		for (i = 0; i < 4; i++) {
 			this->dns[i] = (uint8_t)values[i];
+		}
 	}
 }
 void Configuration::setMac(char* array) {
 	int values[6];
 	int i;
-
-	if (6 == sscanf(array, "%x:%x:%x:%x:%x:%x%c",
+	bool convertOk = false;
+	if (7 == sscanf(array, "%x:%x:%x:%x:%x:%x%c",
 		&values[0], &values[1], &values[2],
 		&values[3], &values[4], &values[5]))
 	{
-		/* convert to uint8_t */
-		for (i = 0; i < 6; ++i)
+		for (i = 0; i < 6; i++) {
 			macAddress[i] = (uint8_t)values[i];
-	}
-
-	else
-	{
-		/* invalid mac */
+		}
 	}
 }
 bool Configuration::ReadFromSDCard(char * file="config.txt")
@@ -204,6 +218,24 @@ void Configuration::writeIPToEEPROM(uint16_t offset)
 	eeprom.write(2 + offset, ip[2]);
 	eeprom.write(3 + offset, ip[3]);
 }
+void Configuration::writeIPToEEPROM(uint16_t offset, IPAddress &ipToWrite)
+{
+	eeprom.write(0 + offset, ipToWrite[0]);
+	eeprom.write(1 + offset, ipToWrite[1]);
+	eeprom.write(2 + offset, ipToWrite[2]);
+	eeprom.write(3 + offset, ipToWrite[3]);
+
+	Serial.println("Vypis bytu");
+	Serial.print(ipToWrite[0]);
+	Serial.println("");
+	Serial.print(ipToWrite[1]);
+	Serial.println("");
+	Serial.print(ipToWrite[2]);
+	Serial.println("");
+	Serial.print(ipToWrite[3]);
+	Serial.println("");
+}
+
 void Configuration::writeMACToEEPROM(uint16_t offset)
 {
 		eeprom.write(0 + offset, &macAddress[0],6);
@@ -213,11 +245,11 @@ void Configuration::writeNumOfLedsToEEPROM(uint8_t strip,uint16_t offset) {
 	eeprom.write((strip - 1) * 2 + 1 + offset, numLed[strip-1] >> 8 );
 }
 
-void Configuration::readIPFromEEPROM(uint16_t offset)
+void Configuration::readIPFromEEPROM(uint16_t offset,IPAddress *target)
 {
 	byte IPAddress[4];
 	eeprom.read(0 + offset, IPAddress, 4);
-	ip = (IPAddress);
+	*target = (IPAddress);
 }
 void Configuration::readMACFromEEPROM(uint16_t offset)
 {
@@ -244,10 +276,10 @@ Configuration::Configuration()
 	macAddress[4] = 0x04;
 	macAddress[5] = 0x05;
 
-	ip = IPAddress(10, 0, 0, 34);
-	subnet = IPAddress(255, 255, 255, 0);
-	gateway = IPAddress(10, 0, 0, 138);
-	dns = IPAddress(8, 8, 8, 8);
+	ip = IPAddress(10, 0, 0, 30);
+	subnet = IPAddress(255, 255, 255, 255);
+	gateway = IPAddress(10, 0, 0, 100);
+	dns = IPAddress(8, 8, 8, 9);
 
 	numOfStrips = NUMOFSTRIPS;
 	for (i = 0; i < numOfStrips; i++) {
