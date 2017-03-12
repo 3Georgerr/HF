@@ -9,7 +9,11 @@
 
 //CS pin SD card
 #define CSPINSDCARD 3
-#define NUMOFSTRIPS 6;
+#define NUMOFSTRIPS 6
+
+#define IPOFFSET 0
+#define MACOFFSET 16
+#define STRIPOFFSET 22
 
 class Configuration
 {
@@ -29,6 +33,19 @@ private:
 
 	boolean sdAvailable;
 	boolean gotData;
+
+	//EEPROM
+	void writeIPToEEPROM(uint16_t offset = IPOFFSET);
+	void writeIPToEEPROM(uint16_t offset, IPAddress &ipToWrite);
+
+	void writeMACToEEPROM(uint16_t offset = MACOFFSET);
+	void readIPFromEEPROM(IPAddress * target, uint16_t offset=IPOFFSET );
+	void readMACFromEEPROM(uint16_t offset = MACOFFSET);
+
+	void writeNumOfLedsToEEPROM(uint8_t strip, uint16_t offset = STRIPOFFSET);
+	void readNumOfLedsFromEEPROM(uint8_t strip, uint16_t offset = STRIPOFFSET);
+
+
 
 public:
 	void initialize(uint8_t eepromAddress=7);
@@ -51,17 +68,12 @@ public:
 	void getMAC(uint8_t mac[]);
 	int getNumOfLed(uint8_t strip);
 
-	//EEPROM
-	void writeIPToEEPROM(uint16_t offset = 0);
-	void writeIPToEEPROM(uint16_t offset, IPAddress &ipToWrite);
-	
-	void writeMACToEEPROM(uint16_t offset = 16);
-	void readIPFromEEPROM(uint16_t offset, IPAddress * target);
-	void readMACFromEEPROM(uint16_t offset = 16);
+	void reset();
 
-	void writeNumOfLedsToEEPROM(uint8_t strip, uint16_t offset=22);
-	void readNumOfLedsFromEEPROM(uint8_t strip, uint16_t offset=22);
-	
+	void overrideNumOfLedsToEEPROM(uint8_t strip, uint16_t numOfLeds, uint16_t offset=22);
+	void overrideIPToEEPROM(char * array, uint16_t offset = 22);
+
+
 	//SD CARD
 	bool ReadFromSDCard(char *file);
 

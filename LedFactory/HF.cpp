@@ -4,6 +4,7 @@ Copyright (c) 2017 Jiri seda
 
 #include "HF.h"
 
+
 HF::HF(uint16_t n,uint8_t p = 6)
 {
 	leds = new CRGB[n];
@@ -18,7 +19,7 @@ HF::HF(uint16_t n,uint8_t p = 6)
 
 	lastBlink = 0;
 
-	mode = 1;
+	mode = 4;
 	changedMode = false;
 
 	//parametry blikani
@@ -32,10 +33,6 @@ HF::HF(uint16_t n,uint8_t p = 6)
 	//Startuj
 	startTime=0;
 	startDelay = 1000;
-	startColorOne = CRGB(255, 0, 0);
-	startColorTwo = CRGB(255, 0, 0);
-	startColorThree = CRGB(255, 0, 0);
-
 	startColorOne = CRGB(255, 0, 0);
 	startColorTwo = CRGB(255, 0, 0);
 	startColorThree = CRGB(255, 0, 0);
@@ -76,8 +73,10 @@ void HF::blink() {
 		else {
 			fill_solid(&(leds[0]), numPix, blinkColorTwo);
 		}
+
 		lightOn = !lightOn;
 	}
+	
 }
 
 void HF::blinkDuo()
@@ -118,15 +117,15 @@ void HF::start() {
 	if (change == true) {
 		change = false;
 		startTime = millis();
-
+		
 		switch (startPhase) {
 		case 0:
-			fill_solid(&(leds[0]), numPix*0.33, startColorOne);
-			fill_solid(&(leds[ulong(1+numPix*0.33)]), numPix- 1 + numPix*0.33, CRGB(0,0,0));
+			fill_solid(&(leds[0]), numPix/3, startColorOne);
+			fill_solid(&(leds[ulong(numPix/3)]), numPix - numPix/3, CRGB(0,0,0));
 			break;
 		case 1:
 			fill_solid(&(leds[0]), numPix*0.66, startColorTwo);
-			fill_solid(&(leds[ulong(1 + numPix*0.66)]), numPix - 1 + numPix*0.66, CRGB(0,0,0));
+			fill_solid(&(leds[ulong((numPix/3)*2)]), numPix - (numPix/3)*2, CRGB(0,0,0));
 			break;
 		case 2:
 			fill_solid(&(leds[0]), numPix, startColorThree);
@@ -139,6 +138,7 @@ void HF::start() {
 		}
 		startPhase++;
 	}
+	
 }
 
 void HF::turnOff()
@@ -149,27 +149,29 @@ void HF::turnOff()
 }
 
 //mode 0 = vypnuto
-//mode 1 = blinking
+//mode 1 = light
 //mode 2 = starting
-//mode 3 = light
+//mode 3 = blinking
+//mode 4 = blinkDuo
 void HF::loop() {
 	switch (mode) {
 	case 0:
 		turnOff();
 		break;
 	case 1:
-		blink();
+		light();
 		break;
 	case 2:
 		start();
 		break;
 	case 3:
-		light();
+		blink();
 		break;
 	case 4:
 		blinkDuo();
 		break;
 	default:
+		turnOff();
 		break;
 	}
 	changedMode = false;
@@ -188,11 +190,9 @@ void HF::setMode(uint8_t mode)
 	this->mode = mode;
 	changedMode = true;
 
-	if (mode == 1) {
 		change = true;
 		lightOn = true;
-
-	}
+		startPhase = 0;
 }
 
 void HF::setColor(uint8_t r, uint8_t g, uint8_t b)
@@ -209,4 +209,71 @@ int HF::getNumOfPixels()
 CRGB * HF::getLedArray()
 {
 	return leds;
+}
+
+void HF::decodeColor(char *color)
+{
+	uint16_t values[9];
+
+	//mode 0 = vypnuto
+	//mode 1 = light
+	//mode 2 = starting
+	//mode 3 = blinking
+	//mode 4 = blinkung duo
+	switch (mode) {
+	case 0:
+		break;
+	case 1:
+		if (3 == sscanf(color, "%d:%d:%d%c", &values[0], &values[1], &values[2])) {
+			if (values[0] < 256 && values[1] < 256 && values[2] < 256) {
+			setColor(values[0], values[1], values[2]);
+		}
+		}
+		break;
+	case 2:
+		if (3 == sscanf(color, "%d:%d:%d,%d:%d:%d,%d:%d:%d%c", &values[0], &values[1], &values[2], &values[3], &values[4], &values[5], &values[6], &values[7], &values[8])) {
+			if (values[0] < 256 && values[1] < 256 && values[2] < 256) {
+				startColorOne = CRGB(values[0], values[1], values[2]);
+				startColorTwo = CRGB(values[0], values[1], values[2]);
+				startColorThree = CRGB(values[0], values[1], values[2]);
+			}
+		}
+		else if (9 == sscanf(color, "%d:%d:%d,%d:%d:%d,%d:%d:%d%c", &values[0], &values[1], &values[2], &values[3], &values[4], &values[5], &values[6], &values[7], &values[8])) {
+			if (values[0] < 256 && values[1] < 256 && values[2] < 256 && values[3] < 256 && values[4] < 256 && values[5] < 256 && values[6] < 256 && values[7] < 256 && values[8] < 256) {
+				startColorOne = CRGB(values[0], values[1], values[2]);
+				startColorTwo = CRGB(values[3], values[4], values[5]);
+				startColorThree = CRGB(values[6], values[7], values[8]);
+				Serial.print(values[0]);
+				Serial.print(",");
+				Serial.print(values[1]);
+				Serial.print(",");
+				Serial.println(values[2]);
+				Serial.print(values[3]);
+				Serial.print(",");
+				Serial.print(values[4]);
+				Serial.print(",");
+				Serial.println(values[5]);
+			}
+		}
+		break;
+	case 3:
+	case 4:
+		 if (3 == sscanf(color, "%d:%d:%d,%d:%d:%d,%d:%d:%d%c", &values[0], &values[1], &values[2], &values[3], &values[4], &values[5], &values[6], &values[7], &values[8])) {
+			Serial.println("NE");
+			if (values[0] < 256 && values[1] < 256 && values[2] < 256) {
+				blinkColorOne = CRGB(values[0], values[1], values[2]);
+			}
+		}else if (6 == sscanf(color, "%d:%d:%d,%d:%d:%d%c", &values[0], &values[1], &values[2], &values[3], &values[4], &values[5])) {
+			Serial.println("OK");
+			if (values[0] < 256 && values[1] < 256 && values[2] < 256 && values[3] < 256 && values[4] < 256 && values[5] < 256) {
+				blinkColorOne = CRGB(values[0], values[1], values[2]);
+				blinkColorTwo = CRGB(values[3], values[4], values[5]);
+			}
+		}
+		
+		
+		break;
+	default:
+		break;
+	}
 }

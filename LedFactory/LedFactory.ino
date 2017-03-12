@@ -8,7 +8,7 @@
 #include "NetworkCommunication.h"
 //#include <Adafruit_NeoPixel.h>
 #include <FastLED\FastLED.h>
-#include "LedController.h"
+//#include "LedController.h"
 //#include <Scheduler.h>
 #include "Configuration.h"
 
@@ -17,6 +17,7 @@
 #include <SD.h>
 
 #define DEBUG
+#define DEBUGNETWORK
 
 //Delka pasku
 #define NUMLEDFIRST 1024
@@ -37,12 +38,18 @@
 
 
 //Tridy Led pasku
-HF *prvni;// = HF(0, PINSTRIPONE);
-HF *druhy;// = HF(0, PINSTRIPTWO);
-HF *treti;// = HF(0, PINSTRIPTHREE);
-HF *ctvrty;// = HF(0, PINSTRIPFOUR);
-HF *paty;// = HF(0, PINSTRIPFIVE);
-HF *sesty;// = HF(0, PINSTRIPSIX);
+HF *prvni;
+// = HF(0, PINSTRIPONE);
+HF *druhy;
+// = HF(0, PINSTRIPTWO);
+HF *treti;
+// = HF(0, PINSTRIPTHREE);
+HF *ctvrty;
+// = HF(0, PINSTRIPFOUR);
+HF *paty;
+// = HF(0, PINSTRIPFIVE);
+HF *sesty;
+// = HF(0, PINSTRIPSIX);
 
 //nastaveni sitovych parametru (mac,ip)
 uint8_t mac[6] = { 0x00,0x01,0x02,0x03,0x04,0x05 };
@@ -50,9 +57,10 @@ IPAddress ip = IPAddress(10, 0, 0, 34);
 IPAddress mySubnet = IPAddress(255,255,255,0);
 IPAddress  myGateway = IPAddress(10, 0, 0, 138);
 IPAddress myDNS = IPAddress(8,8,8,8);
-NetworkCommunication nc = NetworkCommunication(mac, ip,myDNS,myGateway,mySubnet);
+NetworkCommunication nc = NetworkCommunication(6,mac, ip,myDNS,myGateway,mySubnet);
+
 //Led controller ovlada pasky pomoci dat ze site
-LedController lc = LedController(6);
+//LedController lc = LedController(6);
 
 
 uint32_t counter = 0;
@@ -60,6 +68,7 @@ uint32_t interval = 100;
 uint32_t lastTime = 0;
 
 
+#define __WDP_MS 2048 // edit this number accordingly
 
 void setup() {
 
@@ -111,12 +120,12 @@ void setup() {
 #endif // DEBUG
 
 	///*
-	prvni =new HF(config.getNumOfLed(0), PINSTRIPONE);
-	druhy =new HF(config.getNumOfLed(1), PINSTRIPTWO);
-	treti =new HF(config.getNumOfLed(2), PINSTRIPTHREE);
-	ctvrty =new HF(config.getNumOfLed(3), PINSTRIPFOUR);
-	paty =new HF(config.getNumOfLed(4), PINSTRIPFIVE);
-	sesty =new HF(config.getNumOfLed(5), PINSTRIPSIX);
+	prvni = new HF(config.getNumOfLed(0), PINSTRIPONE);
+	druhy = new HF(config.getNumOfLed(1), PINSTRIPTWO);
+	treti = new HF(config.getNumOfLed(2), PINSTRIPTHREE);
+	ctvrty = new HF(config.getNumOfLed(3), PINSTRIPFOUR);
+	paty = new HF(config.getNumOfLed(4), PINSTRIPFIVE);
+	sesty = new HF(config.getNumOfLed(5), PINSTRIPSIX);
 	//*/
 
 	//Pridame pasky k vykresleni
@@ -128,9 +137,9 @@ void setup() {
 	FastLED.addLeds<WS2812B, PINSTRIPSIX, GRB>(sesty->getLedArray(), config.getNumOfLed(5));
 
 
-	ip = IPAddress(10, 0, 0, 34);
+	//	ip = IPAddress(10, 0, 0, 34);
 
-	//Funguje
+		//Funguje
 	ip = config.getIP();
 	myDNS = config.getDNS();
 	myGateway = config.getGateway();
@@ -138,7 +147,7 @@ void setup() {
 	config.getMAC(mac);
 	delay(100);
 
-#ifdef DEBUG
+#ifdef DEBUGNETWORK
 	Serial.print("IP:");
 	Serial.print(ip[0]);
 	Serial.print(".");
@@ -188,9 +197,20 @@ void setup() {
 	Serial.flush();
 #endif
 
-	nc = NetworkCommunication(mac, ip, myDNS, myGateway, mySubnet);
+	nc = NetworkCommunication(6, mac, ip, myDNS, myGateway, mySubnet);
+
+	//Prevod LedControlleru na NetworkCommunication
+	nc.setStrip(prvni, 0);
+	nc.setStrip(druhy, 1);
+	nc.setStrip(treti, 2);
+	nc.setStrip(ctvrty, 3);
+	nc.setStrip(paty, 4);
+	nc.setStrip(sesty, 5);
+
+	nc.setConfig(&config);
 
 	//predame odkaz na led pasky a network "driver"
+	/*
 	lc.setStrip(prvni, 0);
 	lc.setStrip(druhy, 1);
 	lc.setStrip(treti, 2);
@@ -198,12 +218,11 @@ void setup() {
 	lc.setStrip(paty, 4);
 	lc.setStrip(sesty, 5);
 	lc.setNetworkcommunication(nc);
-
+	*/
 
 	//lc.getStrip(0)->blinkColor(0, 10, 1, 0, 1, 1);
 	//lc.getStrip(0)->blinkCRGB(0, 0, 1, 0, 1, 0);
 	//lc.getStrip(1)->blinkColor(1, 0, 0, 0, 0, 1);
-	lc.getStrip(0)->setMode(4);
 	
 	nc.start();
 
@@ -217,7 +236,9 @@ void loop() {
 		FastLED.show();
 	}
 
-	lc.loop();
+	//lc.loop();
+	nc.loop();
+
 
 	//Testovani
 	/*if (millis()>10000 == 1 && counter == 0) {
@@ -269,3 +290,4 @@ void loop2(){
 yield();
 }
 */
+

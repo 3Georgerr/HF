@@ -14,12 +14,11 @@ void Configuration::initialize(uint8_t eepromAddress)
 	}
 
 	
-	readIPFromEEPROM(0,&ip);
-	readIPFromEEPROM(4,&subnet);
-	readIPFromEEPROM(8, &gateway);
-	readIPFromEEPROM(12, &dns);
-	readMACFromEEPROM();
-	
+	readIPFromEEPROM(&ip,0);
+	readIPFromEEPROM(&subnet,4);
+	readIPFromEEPROM(&gateway,8);
+	readIPFromEEPROM(&dns,12);
+	readMACFromEEPROM();	
 }
 
 void Configuration::setParameters(char array[4][31], uint8_t NumOfparams = 4)
@@ -49,6 +48,7 @@ void Configuration::setParameters(char array[4][31], uint8_t NumOfparams = 4)
 			setMac(array[1]);
 			writeMACToEEPROM();
 		}
+		
 }
 
 
@@ -94,8 +94,6 @@ void Configuration::setSubnet(char* array) {
 			this->subnet[i] = values[i];
 		}
 	}
-
-	
 }
 void Configuration::setGateway(char* array) {
 	int values[4];
@@ -245,7 +243,7 @@ void Configuration::writeNumOfLedsToEEPROM(uint8_t strip,uint16_t offset) {
 	eeprom.write((strip - 1) * 2 + 1 + offset, numLed[strip-1] >> 8 );
 }
 
-void Configuration::readIPFromEEPROM(uint16_t offset,IPAddress *target)
+void Configuration::readIPFromEEPROM(IPAddress *target, uint16_t offset)
 {
 	byte IPAddress[4];
 	eeprom.read(0 + offset, IPAddress, 4);
@@ -263,6 +261,21 @@ void Configuration::readNumOfLedsFromEEPROM(uint8_t strip, uint16_t offset) {
 	low = eeprom.read((strip - 1) * 2 + 0 + offset);
 	high = eeprom.read((strip - 1) * 2 + 1 + offset);
 	numLed[strip - 1] = (high << 8) + low;
+}
+
+//Sekce pro manualni nastaveni
+
+//strip cislovany od 0;
+void Configuration::overrideNumOfLedsToEEPROM(uint8_t strip, uint16_t numOfLeds, uint16_t offset) {
+	if (strip < numOfStrips) {
+		eeprom.write(strip * 2 + 0 + offset, numOfLeds & 0xff);
+		eeprom.write(strip * 2 + 1 + offset, numOfLeds >> 8);
+	}
+}
+
+
+void Configuration::reset() {
+	NVIC_SystemReset();
 }
 
 Configuration::Configuration()

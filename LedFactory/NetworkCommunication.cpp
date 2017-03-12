@@ -113,7 +113,7 @@ void NetworkCommunication::loop()
 						// parse the buffer into params[][]
 						//pokud bychom pouzili buffer
 						//int resultsCt = parseUrlParams(bud, params, 5, true);
-						resultsCt = parseUrlParams(&clientline[5], params, 5, true);
+						resultsCt = parseUrlParams(&clientline[5], params, 16, true);
 
 
 						client.println("\" produced ");
@@ -122,16 +122,18 @@ void NetworkCommunication::loop()
 						client.println();
 						
 						for (int i = 0; i < resultsCt; i++) {
-							client.println("param ");
-							client.println(i);
-							client.println(" name \"");
-							client.println(params[i][0]);
-							client.println("\", param \"");
-							client.println(params[i][1]);
-							client.println("\".");
+							client.print("param ");
+							client.print(i);
+							client.print(" name \"");
+							client.print(params[i][0]);
+							client.print("\", param \"");
+							client.print(params[i][1]);
+							client.print("\".");
 							client.println();
 						}
 						
+						decodeParams(params,resultsCt);
+
 						// }
 						//          file.close();
 					}
@@ -140,7 +142,7 @@ void NetworkCommunication::loop()
 						client.println("HTTP/1.1 404 Not Found");
 						client.println("Content-Type: text/html");
 						client.println();
-						client.println("<h2>File Not Found!</h2>");
+						client.println("<h2>Not Found!</h2>");
 					}
 					break;
 				}
@@ -150,6 +152,9 @@ void NetworkCommunication::loop()
 			client.stop();
 		}
 	
+		for (int i = 0; i < numOfStrips; i++) {
+			ledStrips[i]->loop();
+		}
 }
 
 void NetworkCommunication::start()
@@ -165,8 +170,76 @@ uint8_t NetworkCommunication::getResults()
 	return resultsCt;
 }
 
+void NetworkCommunication::decodeParams(char *results[][2], uint8_t numOfResults)
+{
+	uint8_t i, temp;
+	uint8_t strip;
+	char *pointer;
 
-NetworkCommunication::NetworkCommunication(uint8_t mac[6], IPAddress myIP, IPAddress myDNS, IPAddress myGateway, IPAddress mySubnet)
+	for (i = 0; i < resultsCt; i++) {
+		if (strcmp(params[i][0], "strip") == 0) {
+			temp = strtol(params[i][1], &pointer, 10);
+			temp--;
+			if (params[i][1] != pointer && temp < numOfStrips) {
+				activeStrip = ledStrips[temp];
+			}
+			Serial.print("pasek:");
+			Serial.println(strip);
+		}
+		else if (strcmp(params[i][0], "mode") == 0) {
+			temp = strtol(params[i][1], &pointer, 10);
+			if (params[i][1] != pointer) {
+				activeStrip->setMode(temp);
+			}
+			Serial.print("mode:");
+			Serial.println(temp);
+		}
+		else if (strcmp(params[i][0], "color") == 0) {
+			activeStrip->decodeColor(params[i][1]);
+		}
+		else if (strcmp(params[i][0], "ip") == 0) {
+		}
+		else if (strcmp(params[i][0], "setStrip") == 0) {
+			uint16_t values[2];
+
+			if (2==sscanf(params[i][1], "%d:%d%c",
+				&values[0], &values[1]))
+			{
+				Serial.print("nastavuji velikost pasku");
+				Serial.print(values[0]);
+				Serial.print(" na ");
+				Serial.println(values[1]);
+				Serial.flush();
+				values[0] --;
+				if (values[0] < numOfStrips) {
+					//numLed[values[0]] = values[1];
+					config->overrideNumOfLedsToEEPROM(values[0], values[1]);
+				}
+			}
+		}
+		else if (strcmp(params[i][0], "resetNow") == 0) {
+			config->reset();
+			Serial.print("volam Restart");
+			Serial.flush();
+		}
+	}	
+}
+
+void NetworkCommunication::setStrip(HF * strip, uint8_t numOfStrip)
+{
+	if (numOfStrip < numOfStrips) {
+		ledStrips[numOfStrip] = strip;
+		activeStrip = ledStrips[numOfStrip];
+	}
+}
+
+void NetworkCommunication::setConfig(Configuration * config)
+{
+	this->config = config;
+}
+
+
+NetworkCommunication::NetworkCommunication(uint8_t numOfStrips,uint8_t mac[6], IPAddress myIP, IPAddress myDNS, IPAddress myGateway, IPAddress mySubnet)
 {
 	this->myIP = myIP;
 	this->myDNS = myDNS;
@@ -178,6 +251,10 @@ NetworkCommunication::NetworkCommunication(uint8_t mac[6], IPAddress myIP, IPAdd
 
 	index = 0;
 	resultsCt = 0;	
+
+	ledStrips = new HF*[numOfStrips];
+	this->numOfStrips = numOfStrips;
+	activeStrip = 0;
 }
 
 /**

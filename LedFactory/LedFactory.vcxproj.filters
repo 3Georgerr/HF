@@ -27,9 +27,6 @@
     <ClInclude Include="NetworkCommunication.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="LedController.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Configuration.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -39,9 +36,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="NetworkCommunication.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="LedController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Configuration.cpp">

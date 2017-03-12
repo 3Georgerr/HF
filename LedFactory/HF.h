@@ -24,9 +24,9 @@ private:
 	uint16_t numPix;
 	
 	//mode 0 = vypnuto
-	//mode 1 = blinking
+	//mode 1 = light
 	//mode 2 = starting
-	//mode 3 = light
+	//mode 3 = blinking
 	//mode 4 = blinkung duo
 	uint8_t mode;
 	
@@ -42,7 +42,7 @@ private:
 	
 	uint32_t startDelay;
 
-	//parametry pro tartovani
+	//parametry pro startovani
 	unsigned long startTime;
 	CRGB startColorOne;
 	CRGB startColorTwo;
@@ -56,6 +56,7 @@ private:
 	
 
 public:
+
 	HF(uint16_t n, uint8_t p);
 	~HF();
 	CRGB Color(uint8_t red, uint8_t green, uint8_t blue);
@@ -76,5 +77,7 @@ public:
 
 	int getNumOfPixels();
 	CRGB* getLedArray();
+
+	void decodeColor(char * color);
 
 };
