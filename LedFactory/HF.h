@@ -28,6 +28,8 @@ private:
 	//mode 2 = starting
 	//mode 3 = blinking
 	//mode 4 = blinkung duo
+	//mode 5 = rainbow
+	//mode 6 = rainbowCycle
 	uint8_t mode;
 	
 	//Omezujeme prepis modu
@@ -52,7 +54,10 @@ private:
 	//barva pro staly svit
 	CRGB confColor;
 	
-	
+	//parametry pro rainbow
+	unsigned long rainbowTime;
+	uint32_t rainbowDelay;
+	uint16_t rainbowState;
 	
 
 public:
@@ -63,6 +68,12 @@ public:
 
 	void blinkColor(uint8_t redFirst, uint8_t greenFirst, uint8_t blueFirst);
 	void blinkColor(uint8_t redFirst, uint8_t greenFirst, uint8_t blueFirst, uint8_t redSecond, uint8_t greenSecond, uint8_t blueSecond);
+
+	CRGB Wheel(byte WheelPos);
+
+	void rainbow();
+
+	void rainbowCycle();
 	
 	void blink();
 	void blinkDuo();
@@ -79,5 +90,11 @@ public:
 	CRGB* getLedArray();
 
 	void decodeColor(char * color);
+
+	void decodeColor(char * color, uint8_t mode);
+
+	void setDelay(uint32_t delay, uint8_t mode);
+
+	void setDelay(uint32_t delay);
 
 };

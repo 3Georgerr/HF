@@ -21,7 +21,7 @@ private:
 	IPAddress ip;
 	IPAddress gateway;
 	IPAddress dns;
-	IPAddress subnet;
+	IPAddress netmask;
 	uint8_t macAddress[6]; // = { 0x00,0x01,0x02,0x03,0x04,0x05 };
 
 	uint16_t numLed[6];
@@ -32,6 +32,7 @@ private:
 	File sdConfiguration;
 
 	boolean sdAvailable;
+	boolean configurationAvailable;
 	boolean gotData;
 
 	//EEPROM
@@ -55,14 +56,14 @@ public:
 	void setStrip(char array[3][31], uint8_t NumOfparams);
 
 	void setIP(char * array);
-	void setSubnet(char * array);
+	void setNetmask(char * array);
 	void setGateway(char * array);
 	void setDNS(char * array);
 	void setMac(char * array);
 
 	//Returns
 	IPAddress getIP();
-	IPAddress getSubnet();
+	IPAddress getNetmask();
 	IPAddress getGateway();
 	IPAddress getDNS();
 	void getMAC(uint8_t mac[]);

@@ -161,7 +161,7 @@ void NetworkCommunication::start()
 {
 	//uint8_t macv[6] = { 0x00,0x01,0x02,0x03,0x04,0x05 };
 	//Ethernet.begin(macv, IPAddress(10, 0, 0, 34), IPAddress(8, 8, 8, 8), IPAddress(10, 0, 0, 138));
-	Ethernet.begin(this->mac, this->myIP,this->myDNS,this->myGateway,this->mySubnet);
+	Ethernet.begin(this->mac, this->myIP,this->myDNS,this->myGateway,this->myNetmask);
 	server.begin();
 }
 
@@ -172,30 +172,66 @@ uint8_t NetworkCommunication::getResults()
 
 void NetworkCommunication::decodeParams(char *results[][2], uint8_t numOfResults)
 {
-	uint8_t i, temp;
+	uint8_t i,temp2;
+	long temp;
 	uint8_t strip;
 	char *pointer;
 
 	for (i = 0; i < resultsCt; i++) {
 		if (strcmp(params[i][0], "strip") == 0) {
 			temp = strtol(params[i][1], &pointer, 10);
-			temp--;
-			if (params[i][1] != pointer && temp < numOfStrips) {
-				activeStrip = ledStrips[temp];
+			temp2 = (uint8_t)temp;
+			temp2--;
+			if (params[i][1] != pointer && temp2 < numOfStrips) {
+				activeStrip = ledStrips[temp2];
 			}
-			Serial.print("pasek:");
-			Serial.println(strip);
 		}
 		else if (strcmp(params[i][0], "mode") == 0) {
 			temp = strtol(params[i][1], &pointer, 10);
+			temp2 = (uint8_t)temp;
 			if (params[i][1] != pointer) {
-				activeStrip->setMode(temp);
+				activeStrip->setMode(temp2);
 			}
-			Serial.print("mode:");
-			Serial.println(temp);
 		}
 		else if (strcmp(params[i][0], "color") == 0) {
 			activeStrip->decodeColor(params[i][1]);
+		}
+		else if (strcmp(params[i][0], "colorMode") == 0) {
+			uint16_t values[2];
+			if (2 == sscanf(params[i][1], "%d,%d,",
+				&values[0], &values[1])) {
+				values[0]--;
+				if (values[0] < numOfStrips) {
+					ledStrips[values[0]]->decodeColor(params[i][1] + 4, values[1]);
+				}
+			}
+			else if (1 == sscanf(params[i][1], "%d,",
+				&values[0])) {
+					activeStrip->decodeColor(params[i][1]+2,values[0]);
+				}
+		}
+		else if (strcmp(params[i][0], "delay") == 0) {
+			uint16_t values[3];
+
+			if (3 == sscanf(params[i][1], "%d,%d,%d%c",
+				&values[0], &values[1],&values[2]))
+			{
+				values[2]--;
+				if (values[2] < numOfStrips) {
+					ledStrips[values[2]]->setDelay(values[0], values[1]);
+				}
+			}
+			else if (2 == sscanf(params[i][1], "%d,%d%c",
+				&values[0], &values[1]))
+			{
+				activeStrip->setDelay(values[0], values[1]);
+			}
+			else if (1 == sscanf(params[i][1], "%d%c",
+				&values[0]))
+			{
+				activeStrip->setDelay(values[0]);
+			}
+			
 		}
 		else if (strcmp(params[i][0], "ip") == 0) {
 		}
@@ -205,11 +241,6 @@ void NetworkCommunication::decodeParams(char *results[][2], uint8_t numOfResults
 			if (2==sscanf(params[i][1], "%d:%d%c",
 				&values[0], &values[1]))
 			{
-				Serial.print("nastavuji velikost pasku");
-				Serial.print(values[0]);
-				Serial.print(" na ");
-				Serial.println(values[1]);
-				Serial.flush();
 				values[0] --;
 				if (values[0] < numOfStrips) {
 					//numLed[values[0]] = values[1];
@@ -219,8 +250,6 @@ void NetworkCommunication::decodeParams(char *results[][2], uint8_t numOfResults
 		}
 		else if (strcmp(params[i][0], "resetNow") == 0) {
 			config->reset();
-			Serial.print("volam Restart");
-			Serial.flush();
 		}
 	}	
 }
@@ -239,12 +268,12 @@ void NetworkCommunication::setConfig(Configuration * config)
 }
 
 
-NetworkCommunication::NetworkCommunication(uint8_t numOfStrips,uint8_t mac[6], IPAddress myIP, IPAddress myDNS, IPAddress myGateway, IPAddress mySubnet)
+NetworkCommunication::NetworkCommunication(uint8_t numOfStrips,uint8_t mac[6], IPAddress myIP, IPAddress myDNS, IPAddress myGateway, IPAddress myNetmask)
 {
 	this->myIP = myIP;
 	this->myDNS = myDNS;
 	this->myGateway = myGateway;
-	this->mySubnet = mySubnet;
+	this->myNetmask = myNetmask;
 	for (int i = 0; i < 6; i++) {
 		this->mac[i] = mac[i];
 	}

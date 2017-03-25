@@ -39,6 +39,12 @@ HF::HF(uint16_t n,uint8_t p = 6)
 	startPhase = 0;
 
 	confColor = CRGB(255,0,0);
+
+	//rainbow
+	rainbowTime = 0;
+	rainbowDelay = 0;
+	rainbowState = 0;
+
 }
 
 HF::~HF()
@@ -56,6 +62,47 @@ void HF::blinkColor(uint8_t redFirst, uint8_t greenFirst, uint8_t blueFirst) {
 void HF::blinkColor(uint8_t redFirst, uint8_t greenFirst, uint8_t blueFirst, uint8_t redSecond, uint8_t greenSecond, uint8_t blueSecond) {
 	blinkColorOne = CRGB(redFirst, greenFirst, blueFirst);
 	blinkColorTwo = CRGB(redSecond, greenSecond, blueSecond);
+}
+
+// Input a value 0 to 255 to get a color value.
+// The colours are a transition r - g - b - back to r.
+CRGB HF::Wheel(byte WheelPos) {
+	if (WheelPos < 85) {
+		return Color(WheelPos * 3, 255 - WheelPos * 3, 0);
+	}
+	else if (WheelPos < 170) {
+		WheelPos -= 85;
+		return Color(255 - WheelPos * 3, 0, WheelPos * 3);
+	}
+	else {
+		WheelPos -= 170;
+		return Color(0, WheelPos * 3, 255 - WheelPos * 3);
+	}
+}
+
+
+void HF::rainbow() {
+	uint32_t i;
+	if (millis() - rainbowTime  > rainbowDelay) {
+		rainbowTime = millis();
+		rainbowState = (rainbowState + 1) % 256;
+		for (i = 0; i<numPix; i++) {
+			leds[i]= Wheel((i + rainbowState) & 255);
+			//strip.setPixelColor(i, Wheel((i + j) & 255));
+		}
+	}
+}
+
+void HF::rainbowCycle() {
+	uint32_t i;
+	if (millis() - rainbowTime  > rainbowDelay) {
+		rainbowTime = millis();
+		rainbowState = (rainbowState + 1) % 256*5;
+		for (i = 0; i<numPix; i++) {
+			leds[i] = Wheel(((i * 256 / numPix) + rainbowState) & 255);
+			//strip.setPixelColor(i, Wheel((i + j) & 255));
+		}
+	}
 }
 
 void HF::blink() {
@@ -153,6 +200,8 @@ void HF::turnOff()
 //mode 2 = starting
 //mode 3 = blinking
 //mode 4 = blinkDuo
+//mode 5 = rainbow
+//mode 6 = rainbowCycle
 void HF::loop() {
 	switch (mode) {
 	case 0:
@@ -169,6 +218,12 @@ void HF::loop() {
 		break;
 	case 4:
 		blinkDuo();
+		break;
+	case 5:
+		rainbow();
+		break;
+	case 6:
+		rainbowCycle();
 		break;
 	default:
 		turnOff();
@@ -243,28 +298,16 @@ void HF::decodeColor(char *color)
 				startColorOne = CRGB(values[0], values[1], values[2]);
 				startColorTwo = CRGB(values[3], values[4], values[5]);
 				startColorThree = CRGB(values[6], values[7], values[8]);
-				Serial.print(values[0]);
-				Serial.print(",");
-				Serial.print(values[1]);
-				Serial.print(",");
-				Serial.println(values[2]);
-				Serial.print(values[3]);
-				Serial.print(",");
-				Serial.print(values[4]);
-				Serial.print(",");
-				Serial.println(values[5]);
 			}
 		}
 		break;
 	case 3:
 	case 4:
 		 if (3 == sscanf(color, "%d:%d:%d,%d:%d:%d,%d:%d:%d%c", &values[0], &values[1], &values[2], &values[3], &values[4], &values[5], &values[6], &values[7], &values[8])) {
-			Serial.println("NE");
 			if (values[0] < 256 && values[1] < 256 && values[2] < 256) {
 				blinkColorOne = CRGB(values[0], values[1], values[2]);
 			}
 		}else if (6 == sscanf(color, "%d:%d:%d,%d:%d:%d%c", &values[0], &values[1], &values[2], &values[3], &values[4], &values[5])) {
-			Serial.println("OK");
 			if (values[0] < 256 && values[1] < 256 && values[2] < 256 && values[3] < 256 && values[4] < 256 && values[5] < 256) {
 				blinkColorOne = CRGB(values[0], values[1], values[2]);
 				blinkColorTwo = CRGB(values[3], values[4], values[5]);
@@ -272,6 +315,100 @@ void HF::decodeColor(char *color)
 		}
 		
 		
+		break;
+	default:
+		break;
+	}
+}
+
+void HF::decodeColor(char *color, uint8_t mode)
+{
+	uint16_t values[9];
+
+	//mode 0 = vypnuto
+	//mode 1 = light
+	//mode 2 = starting
+	//mode 3 = blinking
+	//mode 4 = blinkung duo
+	switch (mode) {
+	case 0:
+		break;
+	case 1:
+		if (3 == sscanf(color, "%d:%d:%d%c", &values[0], &values[1], &values[2])) {
+			if (values[0] < 256 && values[1] < 256 && values[2] < 256) {
+				setColor(values[0], values[1], values[2]);
+			}
+		}
+		break;
+	case 2:
+		if (3 == sscanf(color, "%d:%d:%d,%d:%d:%d,%d:%d:%d%c", &values[0], &values[1], &values[2], &values[3], &values[4], &values[5], &values[6], &values[7], &values[8])) {
+			if (values[0] < 256 && values[1] < 256 && values[2] < 256) {
+				startColorOne = CRGB(values[0], values[1], values[2]);
+				startColorTwo = CRGB(values[0], values[1], values[2]);
+				startColorThree = CRGB(values[0], values[1], values[2]);
+			}
+		}
+		else if (9 == sscanf(color, "%d:%d:%d,%d:%d:%d,%d:%d:%d%c", &values[0], &values[1], &values[2], &values[3], &values[4], &values[5], &values[6], &values[7], &values[8])) {
+			if (values[0] < 256 && values[1] < 256 && values[2] < 256 && values[3] < 256 && values[4] < 256 && values[5] < 256 && values[6] < 256 && values[7] < 256 && values[8] < 256) {
+				startColorOne = CRGB(values[0], values[1], values[2]);
+				startColorTwo = CRGB(values[3], values[4], values[5]);
+				startColorThree = CRGB(values[6], values[7], values[8]);
+			}
+		}
+		break;
+	case 3:
+	case 4:
+		if (3 == sscanf(color, "%d:%d:%d,%d:%d:%d,%d:%d:%d%c", &values[0], &values[1], &values[2], &values[3], &values[4], &values[5], &values[6], &values[7], &values[8])) {
+			if (values[0] < 256 && values[1] < 256 && values[2] < 256) {
+				blinkColorOne = CRGB(values[0], values[1], values[2]);
+			}
+		}
+		else if (6 == sscanf(color, "%d:%d:%d,%d:%d:%d%c", &values[0], &values[1], &values[2], &values[3], &values[4], &values[5])) {
+			if (values[0] < 256 && values[1] < 256 && values[2] < 256 && values[3] < 256 && values[4] < 256 && values[5] < 256) {
+				blinkColorOne = CRGB(values[0], values[1], values[2]);
+				blinkColorTwo = CRGB(values[3], values[4], values[5]);
+			}
+		}
+
+
+		break;
+	default:
+		break;
+	}
+}
+
+void HF::setDelay(uint32_t delay, uint8_t mode) {
+
+	switch (mode) {
+	case 2:
+		startDelay = delay;
+		break;
+	case 3:
+	case 4:
+		blinkDelay = delay;
+		break;
+	case 5:
+	case 6:
+		rainbowDelay = delay;
+		break;
+	default:
+		break;
+	}
+}
+
+void HF::setDelay(uint32_t delay) {
+
+	switch (mode) {
+	case 2:
+		startDelay = delay;
+		break;
+	case 3:
+	case 4:
+		blinkDelay = delay;
+		break;
+	case 5:
+	case 6:
+		rainbowDelay = delay;
 		break;
 	default:
 		break;

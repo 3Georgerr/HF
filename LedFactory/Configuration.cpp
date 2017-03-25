@@ -15,7 +15,7 @@ void Configuration::initialize(uint8_t eepromAddress)
 
 	
 	readIPFromEEPROM(&ip,0);
-	readIPFromEEPROM(&subnet,4);
+	readIPFromEEPROM(&netmask,4);
 	readIPFromEEPROM(&gateway,8);
 	readIPFromEEPROM(&dns,12);
 	readMACFromEEPROM();	
@@ -25,16 +25,19 @@ void Configuration::setParameters(char array[4][31], uint8_t NumOfparams = 4)
 { 
 	if (strcmp(array[0], "strip")==0) {
 		setStrip(array + 1, NumOfparams);
-		writeNumOfLedsToEEPROM(atoi(array[1]));
+		long temp;
+		char *pointer;
+		temp = strtol(array[1], &pointer, 10);
+		writeNumOfLedsToEEPROM((uint8_t)temp);
 		}
 		else if (strcmp(array[0], "ip") == 0) {
 			setIP(array[1]);
 			writeIPToEEPROM();
 		}
 		else if (strcmp(array[0], "netmask") == 0) {
-			setSubnet(array[1]);
+			setNetmask(array[1]);
 
-			writeIPToEEPROM(4,subnet);
+			writeIPToEEPROM(4,netmask);
 		}
 		else if (strcmp(array[0], "gateway") == 0) {
 			setGateway(array[1]);
@@ -56,15 +59,17 @@ void Configuration::setStrip(char array[3][31], uint8_t NumOfparams) {
 	uint8_t strip;
 	uint16_t num;
 
-	/*
-	Serial.println("hodnoty");
-	Serial.println(array[0]);
-	Serial.println(array[1]);
-	Serial.println(array[2]);
-	*/
+	long temp;
+	char *pointer;
 
-	strip = atoi(array[0])-1;
-	num = atoi(array[1]);
+	//strip = atoi(array[0])-1;				//Nedokáže ohlídat neèíslo
+	temp = strtol(array[0], &pointer, 10);
+	strip = (uint8_t)temp;
+	strip--;
+	//num = atoi(array[1]);
+	temp = strtol(array[1], &pointer, 10);
+	num = (uint8_t)temp;
+	
 	if (strip <= numOfStrips) {
 		numLed[strip] = num;
 	}
@@ -83,7 +88,7 @@ void Configuration::setIP(char* array) {
 		}
 	}
 }
-void Configuration::setSubnet(char* array) {
+void Configuration::setNetmask(char* array) {
 	int values[4];
 	int i;
 	if (5 == sscanf(array, "%d.%d.%d.%d%c",
@@ -91,7 +96,7 @@ void Configuration::setSubnet(char* array) {
 		&values[3]))
 	{
 		for (i = 0; i < 4; i++) {
-			this->subnet[i] = values[i];
+			this->netmask[i] = values[i];
 		}
 	}
 }
@@ -150,7 +155,6 @@ bool Configuration::ReadFromSDCard(char * file="config.txt")
 			i = sdConfiguration.readBytesUntil('\n', line, 30);
 			line[i] = '\0';
 			p = 0;
-			Serial.println(line);
 			chars_array[0][0] = '\0';
 			chars_array[1][0] = '\0';
 			chars_array[2][0] = '\0';
@@ -185,9 +189,9 @@ IPAddress Configuration::getIP()
 {
 	return this->ip;
 }
-IPAddress Configuration::getSubnet()
+IPAddress Configuration::getNetmask()
 {
-	return this->subnet;
+	return this->netmask;
 }
 IPAddress Configuration::getGateway()
 {
@@ -222,16 +226,6 @@ void Configuration::writeIPToEEPROM(uint16_t offset, IPAddress &ipToWrite)
 	eeprom.write(1 + offset, ipToWrite[1]);
 	eeprom.write(2 + offset, ipToWrite[2]);
 	eeprom.write(3 + offset, ipToWrite[3]);
-
-	Serial.println("Vypis bytu");
-	Serial.print(ipToWrite[0]);
-	Serial.println("");
-	Serial.print(ipToWrite[1]);
-	Serial.println("");
-	Serial.print(ipToWrite[2]);
-	Serial.println("");
-	Serial.print(ipToWrite[3]);
-	Serial.println("");
 }
 
 void Configuration::writeMACToEEPROM(uint16_t offset)
@@ -290,7 +284,7 @@ Configuration::Configuration()
 	macAddress[5] = 0x05;
 
 	ip = IPAddress(10, 0, 0, 30);
-	subnet = IPAddress(255, 255, 255, 255);
+	netmask = IPAddress(255, 255, 255, 255);
 	gateway = IPAddress(10, 0, 0, 100);
 	dns = IPAddress(8, 8, 8, 9);
 

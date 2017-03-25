@@ -54,10 +54,10 @@ HF *sesty;
 //nastaveni sitovych parametru (mac,ip)
 uint8_t mac[6] = { 0x00,0x01,0x02,0x03,0x04,0x05 };
 IPAddress ip = IPAddress(10, 0, 0, 34);
-IPAddress mySubnet = IPAddress(255,255,255,0);
+IPAddress myNetmask = IPAddress(255,255,255,0);
 IPAddress  myGateway = IPAddress(10, 0, 0, 138);
 IPAddress myDNS = IPAddress(8,8,8,8);
-NetworkCommunication nc = NetworkCommunication(6,mac, ip,myDNS,myGateway,mySubnet);
+NetworkCommunication nc = NetworkCommunication(6,mac, ip,myDNS,myGateway,myNetmask);
 
 //Led controller ovlada pasky pomoci dat ze site
 //LedController lc = LedController(6);
@@ -67,8 +67,6 @@ uint32_t counter = 0;
 uint32_t interval = 100;
 uint32_t lastTime = 0;
 
-
-#define __WDP_MS 2048 // edit this number accordingly
 
 void setup() {
 
@@ -143,9 +141,9 @@ void setup() {
 	ip = config.getIP();
 	myDNS = config.getDNS();
 	myGateway = config.getGateway();
-	mySubnet = config.getSubnet();
+	myNetmask = config.getNetmask();
 	config.getMAC(mac);
-	delay(100);
+	//delay(100);
 
 #ifdef DEBUGNETWORK
 	Serial.print("IP:");
@@ -157,15 +155,16 @@ void setup() {
 	Serial.print(".");
 	Serial.println(ip[3]);
 
-	Serial.print("Subnet:");
-	Serial.print(mySubnet[0]);
+	Serial.print("Netmask:");
+	Serial.print(myNetmask[0]);
 	Serial.print(".");
-	Serial.print(mySubnet[1]);
+	Serial.print(myNetmask[1]);
 	Serial.print(".");
-	Serial.print(mySubnet[2]);
+	Serial.print(myNetmask[2]);
 	Serial.print(".");
-	Serial.println(mySubnet[3]);
+	Serial.println(myNetmask[3]);
 
+	Serial.print("Gateway:");
 	Serial.print(myGateway[0]);
 	Serial.print(".");
 	Serial.print(myGateway[1]);
@@ -174,6 +173,7 @@ void setup() {
 	Serial.print(".");
 	Serial.println(myGateway[3]);
 
+	Serial.print("DNS:");
 	Serial.print(myDNS[0]);
 	Serial.print(".");
 	Serial.print(myDNS[1]);
@@ -182,6 +182,7 @@ void setup() {
 	Serial.print(".");
 	Serial.println(myDNS[3]);
 
+	Serial.print("MAC:");
 	Serial.print(mac[0]);
 	Serial.print(".");
 	Serial.print(mac[1]);
@@ -193,11 +194,10 @@ void setup() {
 	Serial.print(mac[4]);
 	Serial.print(".");
 	Serial.println(mac[5]);
-	Serial.print("Konec:");
 	Serial.flush();
 #endif
 
-	nc = NetworkCommunication(6, mac, ip, myDNS, myGateway, mySubnet);
+	nc = NetworkCommunication(6, mac, ip, myDNS, myGateway, myNetmask);
 
 	//Prevod LedControlleru na NetworkCommunication
 	nc.setStrip(prvni, 0);
