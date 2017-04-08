@@ -7,6 +7,7 @@
 #include "HF.h"
 #include "NetworkCommunication.h"
 //#include <Adafruit_NeoPixel.h>
+#include <DmxSimple.h>
 #include <FastLED\FastLED.h>
 //#include "LedController.h"
 //#include <Scheduler.h>
@@ -127,6 +128,10 @@ void setup() {
 	//*/
 
 	//Pridame pasky k vykresleni
+
+	CRGB test;
+
+	FastLED.addLeds<DMXSIMPLE, 2, RGB>(test, 1);
 	FastLED.addLeds<WS2812B, PINSTRIPONE, GRB>(prvni->getLedArray(), config.getNumOfLed(0));
 	FastLED.addLeds<WS2812B, PINSTRIPTWO, GRB>(druhy->getLedArray(), config.getNumOfLed(1));
 	FastLED.addLeds<WS2812B, PINSTRIPTHREE, GRB>(treti->getLedArray(), config.getNumOfLed(2));

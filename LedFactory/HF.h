@@ -7,6 +7,7 @@ Copyright (c) 2017 Jiri seda
 #endif
 
 #include <Arduino.h>
+#include <DmxSimple.h>
 #include <FastLED\FastLED.h>
 
 
